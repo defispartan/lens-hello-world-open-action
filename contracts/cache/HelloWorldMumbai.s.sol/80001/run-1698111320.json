@@ -1,0 +1,7 @@
+{
+  "transactions": [
+    {
+      "rpc": "https://polygon-testnet.public.blastapi.io"
+    }
+  ]
+}

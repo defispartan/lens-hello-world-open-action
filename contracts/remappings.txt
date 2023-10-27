@@ -1,0 +1,6 @@
+ds-test/=lib/forge-std/lib/ds-test/src/
+erc4626-tests/=lib/openzeppelin-contracts/lib/erc4626-tests/
+forge-std/=lib/forge-std/src/
+layerzero/=lib/layerzero/contracts/
+lens/=lib/lens/
+openzeppelin-contracts/=lib/openzeppelin-contracts/

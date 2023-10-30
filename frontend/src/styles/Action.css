@@ -84,13 +84,13 @@ label {
 }
 
 .block-explorer-link {
-  color: black;
+  color: white;
   font-size: 12px;
 }
 
 .create-state-text {
-  color: black;
-  margin-top: 20px;
+  color: white;
+  margin-top: 30px;
 }
 
 p {
@@ -170,16 +170,11 @@ p {
 }
 
 a {
-  color: #37dc97;
-  text-decoration: none;
-  transition: color 0.3s ease-in-out;
+  color: #ffffff;
 }
 
 a:hover {
-  color: #ffffff;
-  background-color: #454545;
-  padding: 2px 4px;
-  border-radius: 4px;
+  color: #989292;
 }
 
 input:focus {

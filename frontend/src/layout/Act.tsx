@@ -78,56 +78,50 @@ const ActionBox = ({
 
   return (
     <div className="box post-box">
-      {!address ? (
-        <div>Connect wallet to execute action</div>
-      ) : (
-        <>
-          <div className="header-text">
-            ProfileID: {post.args.postParams.profileId} PublicationID:{" "}
-            {post.args.pubId}
-          </div>
-          <div className="header-text">
-            <a href={`${blockExplorerLink}${post.transactionHash}`}>Link</a>
-          </div>
-          <div className="header-text">
-            Initialize Message: {fetchInitMessage(post)}
-          </div>
-          <label htmlFor={`initializeTextId-${post.args.pubId}`}>
-            Action message (will be emitted in HelloWorld event)
-          </label>
-          <input
-            id={`initializeTextId-${post.args.pubId}`}
-            className="inputBox"
-            type="text"
-            value={actionText}
-            onChange={(e) => setActionText(e.target.value)}
-          />
-          <button
-            className="button create-button active"
-            onClick={() => execute(post, actionText)}
-          >
-            Create
-          </button>
-          {createState && <p className="create-state-text">{createState}</p>}
-          {txHash && (
-            <a
-              href={`${blockExplorerLink}${txHash}`}
-              className="block-explorer-link"
-            >
-              Block Explorer Link
-            </a>
-          )}
-          <button
-            className="clear-button"
-            onClick={() => {
-              setTxHash(undefined);
-              setActionText("");
-            }}
-          >
-            Clear
-          </button>
-        </>
+      <div className="header-text">
+        ProfileID: {post.args.postParams.profileId} PublicationID:{" "}
+        {post.args.pubId}
+      </div>
+      <div className="header-text">
+        <a href={`${blockExplorerLink}${post.transactionHash}`}>Link</a>
+      </div>
+      <div className="header-text">
+        Initialize Message: {fetchInitMessage(post)}
+      </div>
+      <label htmlFor={`initializeTextId-${post.args.pubId}`}>
+        Action message (will be emitted in HelloWorld event)
+      </label>
+      <input
+        id={`initializeTextId-${post.args.pubId}`}
+        className="inputBox"
+        type="text"
+        value={actionText}
+        onChange={(e) => setActionText(e.target.value)}
+      />
+      <button
+        className="button create-button active"
+        onClick={() => execute(post, actionText)}
+      >
+        Create
+      </button>
+      {createState && <p className="create-state-text">{createState}</p>}
+      {txHash && (
+        <a
+          href={`${blockExplorerLink}${txHash}`}
+          className="block-explorer-link"
+        >
+          Block Explorer Link
+        </a>
       )}
+      <button
+        className="clear-button"
+        onClick={() => {
+          setTxHash(undefined);
+          setActionText("");
+        }}
+      >
+        Clear
+      </button>
     </div>
   );
 };
@@ -151,31 +145,39 @@ export const Actions = () => {
   return (
     <>
       <h3 className="headerTop">Posts w/ Hello World Open Action</h3>
-      <div>
-        <input
-          type="checkbox"
-          id="filterCheckbox"
-          className="filter-label"
-          checked={filterOwnPosts}
-          onChange={(e) => setFilterOwnPosts(e.target.checked)}
-        />
-        <label htmlFor="filterCheckbox" className="filter-label">
-          Filter only posts from my profile
-        </label>
-      </div>
-      {loading && <div className="spinner" />}
-      {filteredPosts.length === 0 ? (
-        <p>None</p>
+      {!address ? (
+        <div className="box post-box">
+          <div>Connect wallet to execute action</div>
+        </div>
       ) : (
-        filteredPosts.map((post, index) => (
-          <ActionBox
-            key={index}
-            post={post}
-            address={address}
-            profileId={profileId}
-            refresh={refresh}
-          />
-        ))
+        <>
+          <div>
+            <input
+              type="checkbox"
+              id="filterCheckbox"
+              className="filter-label"
+              checked={filterOwnPosts}
+              onChange={(e) => setFilterOwnPosts(e.target.checked)}
+            />
+            <label htmlFor="filterCheckbox" className="filter-label">
+              Filter only posts from my profile
+            </label>
+          </div>
+          {loading && <div className="spinner" />}
+          {filteredPosts.length === 0 ? (
+            <p>None</p>
+          ) : (
+            filteredPosts.map((post, index) => (
+              <ActionBox
+                key={index}
+                post={post}
+                address={address}
+                profileId={profileId}
+                refresh={refresh}
+              />
+            ))
+          )}
+        </>
       )}
     </>
   );

@@ -19,7 +19,7 @@ body {
 }
 
 h1 {
-  font-size: 2rem;
+  font-size: 3rem;
   margin: 2rem 0;
   color: #ffffff;
   text-align: center;
@@ -52,15 +52,15 @@ h1 {
 }
 
 label {
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .button {
-  padding: 0.5rem 1rem;
+  padding: 1rem 1.5rem;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 1rem;
+  font-size: 1.25rem;
 }
 
 .create-button {
@@ -85,7 +85,7 @@ label {
 
 .block-explorer-link {
   color: white;
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .create-state-text {
@@ -98,7 +98,7 @@ p {
 }
 
 .post-box {
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 }
 
 .header-text {
@@ -134,7 +134,7 @@ p {
 
 .inline-content {
   margin-bottom: 10px;
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .button-row {
@@ -179,4 +179,34 @@ a:hover {
 
 input:focus {
   outline: none;
+}
+
+.centered-box {
+  border: 1px solid white;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 80%;
+  margin: 0 auto;
+  margin-bottom: 15px;
+}
+
+.field {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.field img {
+  max-width: 100%;
+  height: auto;
+  border: none;
+}
+
+.uri {
+  width: 100px;
+  height: 100px;
 }

@@ -64,8 +64,12 @@ export const LensHelloWorldProvider: FC<LensHelloWorldProviderProps> = ({
 
     const currentBlock = await publicClient({ chainId: 1 }).getBlockNumber();
 
-    let allPostEvents: PostCreatedEventFormatted[] = [...savedPostEvents];
-    let allHelloWorldEvents: GreetEventFormatted[] = [...savedHelloWorldEvents];
+    const postEventsMap = new Map(
+      savedPostEvents.map((event) => [event.transactionHash, event])
+    );
+    const helloWorldEventsMap = new Map(
+      savedHelloWorldEvents.map((event) => [event.transactionHash, event])
+    );
 
     for (let i = startBlock; i < currentBlock; i += 1000) {
       const toBlock = i + 999 > currentBlock ? currentBlock : i + 999;
@@ -104,12 +108,16 @@ export const LensHelloWorldProvider: FC<LensHelloWorldProviderProps> = ({
         convertGreetEventToSerializable(event)
       );
 
-      allPostEvents = [...allPostEvents, ...serializablePostEvents];
-      allHelloWorldEvents = [
-        ...allHelloWorldEvents,
-        ...serializableGreetEvents,
-      ];
+      serializablePostEvents.forEach((event) =>
+        postEventsMap.set(event.transactionHash, event)
+      );
+      serializableGreetEvents.forEach((event) =>
+        helloWorldEventsMap.set(event.transactionHash, event)
+      );
     }
+
+    const allPostEvents = Array.from(postEventsMap.values());
+    const allHelloWorldEvents = Array.from(helloWorldEventsMap.values());
 
     localStorage.setItem("currentBlock", currentBlock.toString());
     localStorage.setItem("postEvents", JSON.stringify(allPostEvents));

@@ -78,26 +78,49 @@ const ActionBox = ({
 
   return (
     <div className="box post-box">
-      <div className="header-text">
-        ProfileID: {post.args.postParams.profileId} PublicationID:{" "}
-        {post.args.pubId}
+      <div className="centered-box">
+        <div className="field">ProfileID: {post.args.postParams.profileId}</div>
+        <div className="field">PublicationID: {post.args.pubId}</div>
+        <div className="header-text">
+          Initialize Message: {fetchInitMessage(post)}
+        </div>
+        <div className="field">
+          <img
+            src={post.args.postParams.contentURI}
+            className="uri"
+            alt="Post"
+          />
+        </div>
+        <div className="field">
+          <a
+            href={`${blockExplorerLink}${post.transactionHash}`}
+            target="_blank"
+          >
+            Txn Link
+          </a>
+        </div>
       </div>
-      <div className="header-text">
-        <a href={`${blockExplorerLink}${post.transactionHash}`}>Link</a>
+      <div className="inline-content">
+        <label htmlFor={`initializeTextId-${post.args.pubId}`}>
+          Action message (will be emitted in HelloWorld event)
+        </label>
+        <input
+          id={`initializeTextId-${post.args.pubId}`}
+          className="inputBox"
+          type="text"
+          value={actionText}
+          onChange={(e) => setActionText(e.target.value)}
+        />
+        <button
+          className="clear-button"
+          onClick={() => {
+            setTxHash(undefined);
+            setActionText("");
+          }}
+        >
+          Clear
+        </button>
       </div>
-      <div className="header-text">
-        Initialize Message: {fetchInitMessage(post)}
-      </div>
-      <label htmlFor={`initializeTextId-${post.args.pubId}`}>
-        Action message (will be emitted in HelloWorld event)
-      </label>
-      <input
-        id={`initializeTextId-${post.args.pubId}`}
-        className="inputBox"
-        type="text"
-        value={actionText}
-        onChange={(e) => setActionText(e.target.value)}
-      />
       <button
         className="button create-button active"
         onClick={() => execute(post, actionText)}
@@ -113,15 +136,6 @@ const ActionBox = ({
           Block Explorer Link
         </a>
       )}
-      <button
-        className="clear-button"
-        onClick={() => {
-          setTxHash(undefined);
-          setActionText("");
-        }}
-      >
-        Clear
-      </button>
     </div>
   );
 };

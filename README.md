@@ -2,6 +2,8 @@
 
 This repo contains smart contracts and a UI which demonstrates a Lens open action to call a helloWorld() function on an external contract.
 
+To get started, you can create a profile on the Mumbai deployment of Lens V2 [here](https://web-git-lens-v2-testnet-heyxyz.vercel.app/).
+
 
 - [Integration Guide](#integration-guide)
 
@@ -15,9 +17,9 @@ This repo contains smart contracts and a UI which demonstrates a Lens open actio
 
 The deployed action module addresses are: 
 
-[Mumbai Testnet](https://mumbai.polygonscan.com/address/0xfd2F3677147047F327FA5506D94D54d93080C7D9) 
+- [Mumbai Testnet](https://mumbai.polygonscan.com/address/0xfd2F3677147047F327FA5506D94D54d93080C7D9) 
 
-Polygon Mainnet - Coming Soon 
+- Polygon Mainnet - Coming Soon 
 
 
 To integrate this open action, support must be added to create and execute the action.

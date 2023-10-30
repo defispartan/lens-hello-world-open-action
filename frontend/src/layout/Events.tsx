@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useLensHelloWorld } from "../context/LensHellowWorldContext";
+import { blockExplorerLink } from "../utils/constants";
 
 export const Events = () => {
   const [filterOwnEvents, setFilterOwnEvents] = useState(false);
@@ -36,9 +37,12 @@ export const Events = () => {
       ) : (
         filteredEvents.map((event, index) => (
           <div key={index} className="box post-box">
-            {event.args.message}
-            {"\n"}
-            {event.args.actor}
+            <div className="inline-content">{event.args.message}</div>
+            <div className="inline-content">from</div>
+            <div className="inline-content">{event.args.actor}</div>
+            <div className="header-text">
+              <a href={`${blockExplorerLink}${event.transactionHash}`}>Link</a>
+            </div>
           </div>
         ))
       )}

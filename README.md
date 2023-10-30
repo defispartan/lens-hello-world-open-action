@@ -1,4 +1,4 @@
-# Lens Open Action Hello World
+# Lens Hello World Open Action
 
 This repo contains smart contracts and a UI which demonstrates a Lens open action to call a helloWorld() function on an external contract.
 

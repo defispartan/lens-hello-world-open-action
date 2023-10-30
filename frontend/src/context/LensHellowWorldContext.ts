@@ -1,6 +1,6 @@
 // LensHelloWorldContext.tsx
 import React, { useContext } from "react";
-import { GreetEventFormatted, PostCreatedEventFormatted } from "../utils/types";
+import { GreetEventFormatted, LoginData, PostCreatedEventFormatted } from "../utils/types";
 
 interface LensHelloWorldContextState {
   profileId?: number;
@@ -12,10 +12,11 @@ interface LensHelloWorldContextState {
   clear: () => void;
   loading: boolean;
   disconnect: () => void;
+  connect: (loginData: LoginData) => void;
 }
 
 const LensHelloWorldContext = React.createContext<LensHelloWorldContextState>(
-  { clear: () => { }, posts: [], greetings: [], refresh: () => { }, loading: false, disconnect: () => { } }
+  { clear: () => { }, posts: [], greetings: [], refresh: () => { }, loading: false, disconnect: () => { }, connect: () => { } }
 );
 
 export const useLensHelloWorld = (): LensHelloWorldContextState => {

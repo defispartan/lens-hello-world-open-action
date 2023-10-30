@@ -1,4 +1,3 @@
-import { useLogin } from "@lens-protocol/react-web";
 import { ReactNode, FC, useState, useEffect, useCallback } from "react";
 import { useAccount } from "wagmi";
 import LensHelloWorldContext from "./LensHellowWorldContext";
@@ -9,6 +8,7 @@ import {
   PostCreatedEventFormatted,
   convertPostEventToSerializable,
   convertGreetEventToSerializable,
+  LoginData,
 } from "../utils/types";
 import {
   helloWorldContractAddress,
@@ -31,10 +31,14 @@ export const LensHelloWorldProvider: FC<LensHelloWorldProviderProps> = ({
   const [handle, setHandle] = useState<string | undefined>();
   const [profileId, setProfileId] = useState<number | undefined>();
   const { address } = useAccount();
-  const { data: loginData } = useLogin();
   const [posts, setPosts] = useState<PostCreatedEventFormatted[]>([]);
   const [greetings, setGreetings] = useState<GreetEventFormatted[]>([]);
   const [loading, setLoading] = useState(false);
+  const [loginData, setLoginData] = useState<LoginData>();
+
+  const connect = (loginDataParam: LoginData) => {
+    setLoginData(loginDataParam);
+  };
 
   const refresh = useCallback(async () => {
     setLoading(true);
@@ -173,6 +177,7 @@ export const LensHelloWorldProvider: FC<LensHelloWorldProviderProps> = ({
           localStorage.removeItem("address");
         },
         loading,
+        connect,
       }}
     >
       {children}

@@ -82,3 +82,13 @@ export function convertGreetEventToSerializable(
         blockNumber: event.blockNumber.toString(),
     };
 }
+
+export type LoginData = {
+    handle: {
+        localName: string;
+    };
+    id: string;
+    ownedBy: {
+        address: string;
+    };
+};

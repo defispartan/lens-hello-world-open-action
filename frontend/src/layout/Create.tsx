@@ -70,6 +70,8 @@ export const Create = () => {
       <div className="box">
         {!address ? (
           <div>Connect wallet to create post</div>
+        ) : !profileId ? (
+          <div>Sign in with Lens Profile to create post</div>
         ) : (
           <>
             <label htmlFor="initializeTextId">

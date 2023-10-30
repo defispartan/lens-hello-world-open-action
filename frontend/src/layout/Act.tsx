@@ -149,6 +149,10 @@ export const Actions = () => {
         <div className="box post-box">
           <div>Connect wallet to execute action</div>
         </div>
+      ) : !profileId ? (
+        <div className="box post-box">
+          <div>Sign in with Lens profile to execute action</div>
+        </div>
       ) : (
         <>
           <div>

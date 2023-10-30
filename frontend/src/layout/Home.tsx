@@ -5,24 +5,31 @@ import { Actions } from "./Act";
 import { Events } from "./Events";
 import { useLensHelloWorld } from "../context/LensHellowWorldContext";
 import { Create } from "./Create";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { LoginData } from "../utils/types";
 
 export const Home = () => {
   const [activeSection, setActiveSection] = useState<string>("create");
-  const { address, handle, clear, disconnect } = useLensHelloWorld();
+  const { address, handle, clear, disconnect, connect } = useLensHelloWorld();
 
   const { data: profiles } = useProfiles({
     where: {
       ownedBy: [address as string],
     },
   });
-  const { execute: executeLogin } = useLogin();
+  const { execute: executeLogin, data: loginData } = useLogin();
 
   const showNoLensProfiles =
     address && !handle && profiles && profiles.length === 0;
   const showSignInWithLens =
     address && !handle && profiles && profiles.length > 0;
   const showConnect = !address || !handle;
+
+  useEffect(() => {
+    if (loginData) {
+      connect(loginData as LoginData);
+    }
+  }, [connect, loginData]);
 
   return (
     <div className="container">

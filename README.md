@@ -2,43 +2,12 @@
 
 This repo contains smart contracts and a UI which demonstrates a Lens open action to call a helloWorld() function on an external contract.
 
-- [Smart Contracts](#smart-contracts)
+- [Integration Guide](#integration-guide)
 
 - [Frontend](#frontend)
 
-- [Integration Guide](#integration-guide)
+- [Smart Contracts](#smart-contracts)
 
-
-## Smart Contracts
-
-
-### Mumbai Testnet
-
-[HelloWorld.sol](https://mumbai.polygonscan.com/address/0xEcfeeE4dcEa32f109da4Ad4D97453cC2d998B60A) 
-
-[HelloWorldOpenAction.sol](https://mumbai.polygonscan.com/address/0xfd2F3677147047F327FA5506D94D54d93080C7D9) 
-
-### Polygon Mainnet
-
-Coming Soon
-
-
-### To Deploy Your Own
-
-1.) Switch to contracts directory (`cd contracts`) and setup environment variables: copy `.env.example` to `.env`, input deployment values in `.env`, and run `source .env` (or equivalent on your OS) 
-
-2.) Run script to deploy `HelloWorld.sol` and `HelloWorldOpenAction.sol` to Mumbai: `forge script script/HelloWorld.s.sol:HelloWorldScript --rpc-url $MUMBAI_RPC_URL --broadcast --verify -vvvv` 
-
-
-## Frontend
-
-Live @ https://hello-world-open-action.vercel.app/
-
-To run locally, clone repo, switch to frontend directory, make sure you have [bun installed](https://bun.sh/docs/installation) and run `bun install && bun run dev` 
-
-Contract address are configured in `frontend/src/constants.ts` 
-
-The `frontend/src/layout` components `Create`, `Act`, and `Events` contain code to create a post with this action, execute this action on a post, and display HelloWorld.sol events respectively. 
 
 
 ## Integration Guide 
@@ -120,3 +89,37 @@ When the button is pressed, `act` should be called on the `LensHub` contract, wi
 The actionModuleData can be encoded identically to the initializeData.
 
 For a complete example of executing this open action on a publication with viem, see [here](https://github.com/defispartan/lens-hello-world-open-action/blob/master/frontend/src/layout/Act.tsx)
+
+
+
+## Smart Contracts
+
+
+### Mumbai Testnet
+
+[HelloWorld.sol](https://mumbai.polygonscan.com/address/0xEcfeeE4dcEa32f109da4Ad4D97453cC2d998B60A) 
+
+[HelloWorldOpenAction.sol](https://mumbai.polygonscan.com/address/0xfd2F3677147047F327FA5506D94D54d93080C7D9) 
+
+### Polygon Mainnet
+
+Coming Soon
+
+
+### To Deploy Your Own
+
+1.) Switch to contracts directory (`cd contracts`) and setup environment variables: copy `.env.example` to `.env`, input deployment values in `.env`, and run `source .env` (or equivalent on your OS) 
+
+2.) Run script to deploy `HelloWorld.sol` and `HelloWorldOpenAction.sol` to Mumbai: `forge script script/HelloWorld.s.sol:HelloWorldScript --rpc-url $MUMBAI_RPC_URL --broadcast --verify -vvvv` 
+
+
+
+## Frontend
+
+Live @ https://hello-world-open-action.vercel.app/
+
+To run locally, clone repo, switch to frontend directory, make sure you have [bun installed](https://bun.sh/docs/installation) and run `bun install && bun run dev` 
+
+Contract address are configured in `frontend/src/constants.ts` 
+
+The `frontend/src/layout` components `Create`, `Act`, and `Events` contain code to create a post with this action, execute this action on a post, and display HelloWorld.sol events respectively. 

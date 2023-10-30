@@ -78,50 +78,56 @@ const ActionBox = ({
 
   return (
     <div className="box post-box">
-      <div className="header-text">
-        ProfileID: {post.args.postParams.profileId} PublicationID:{" "}
-        {post.args.pubId}
-      </div>
-      <div className="header-text">
-        <a href={`${blockExplorerLink}${post.transactionHash}`}>Link</a>
-      </div>
-      <div className="header-text">
-        Initialize Message: {fetchInitMessage(post)}
-      </div>
-      <label htmlFor={`initializeTextId-${post.args.pubId}`}>
-        Action message (will be emitted in HelloWorld event)
-      </label>
-      <input
-        id={`initializeTextId-${post.args.pubId}`}
-        className="inputBox"
-        type="text"
-        value={actionText}
-        onChange={(e) => setActionText(e.target.value)}
-      />
-      <button
-        className="button create-button"
-        onClick={() => execute(post, actionText)}
-      >
-        Create
-      </button>
-      {createState && <p className="create-state-text">{createState}</p>}
-      {txHash && (
-        <a
-          href={`${blockExplorerLink}${txHash}`}
-          className="block-explorer-link"
-        >
-          Block Explorer Link
-        </a>
+      {!address ? (
+        <div>Connect wallet to execute action</div>
+      ) : (
+        <>
+          <div className="header-text">
+            ProfileID: {post.args.postParams.profileId} PublicationID:{" "}
+            {post.args.pubId}
+          </div>
+          <div className="header-text">
+            <a href={`${blockExplorerLink}${post.transactionHash}`}>Link</a>
+          </div>
+          <div className="header-text">
+            Initialize Message: {fetchInitMessage(post)}
+          </div>
+          <label htmlFor={`initializeTextId-${post.args.pubId}`}>
+            Action message (will be emitted in HelloWorld event)
+          </label>
+          <input
+            id={`initializeTextId-${post.args.pubId}`}
+            className="inputBox"
+            type="text"
+            value={actionText}
+            onChange={(e) => setActionText(e.target.value)}
+          />
+          <button
+            className="button create-button active"
+            onClick={() => execute(post, actionText)}
+          >
+            Create
+          </button>
+          {createState && <p className="create-state-text">{createState}</p>}
+          {txHash && (
+            <a
+              href={`${blockExplorerLink}${txHash}`}
+              className="block-explorer-link"
+            >
+              Block Explorer Link
+            </a>
+          )}
+          <button
+            className="clear-button"
+            onClick={() => {
+              setTxHash(undefined);
+              setActionText("");
+            }}
+          >
+            Clear
+          </button>
+        </>
       )}
-      <button
-        className="clear-button"
-        onClick={() => {
-          setTxHash(undefined);
-          setActionText("");
-        }}
-      >
-        Clear
-      </button>
     </div>
   );
 };

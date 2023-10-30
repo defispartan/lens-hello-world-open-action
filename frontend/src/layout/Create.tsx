@@ -68,48 +68,57 @@ export const Create = () => {
     <>
       <h3 className="headerTop">Create Hello World Smart Post</h3>
       <div className="box">
-        <label htmlFor="initializeTextId">
-          Content URI (link to content for the post)
-        </label>
-        <input
-          id="uriId"
-          className="inputBox"
-          type="text"
-          value={uri}
-          onChange={(e) => setURI(e.target.value)}
-        />
-        <label htmlFor="initializeTextId">
-          Initialize message (will be emitted in HelloWorld event)
-        </label>
-        <input
-          id="initializeTextId"
-          className="inputBox"
-          type="text"
-          value={initializeText}
-          onChange={(e) => setInitializeText(e.target.value)}
-        />
-        <button className="button create-button" onClick={createPost}>
-          Create
-        </button>
-        {createState && <p className="create-state-text">{createState}</p>}
-        {txHash && (
-          <a
-            href={`${blockExplorerLink}${txHash}`}
-            className="block-explorer-link"
-          >
-            Block Explorer Link
-          </a>
+        {!address ? (
+          <div>Connect wallet to create post</div>
+        ) : (
+          <>
+            <label htmlFor="initializeTextId">
+              Content URI (link to content for the post)
+            </label>
+            <input
+              id="uriId"
+              className="inputBox"
+              type="text"
+              value={uri}
+              onChange={(e) => setURI(e.target.value)}
+            />
+            <label htmlFor="initializeTextId">
+              Initialize message (will be emitted in HelloWorld event)
+            </label>
+            <input
+              id="initializeTextId"
+              className="inputBox"
+              type="text"
+              value={initializeText}
+              onChange={(e) => setInitializeText(e.target.value)}
+            />
+            <button
+              className="button create-button active"
+              onClick={createPost}
+            >
+              Create
+            </button>
+            {createState && <p className="create-state-text">{createState}</p>}
+            {txHash && (
+              <a
+                href={`${blockExplorerLink}${txHash}`}
+                className="block-explorer-link"
+              >
+                Block Explorer Link
+              </a>
+            )}
+            <button
+              className="clear-button"
+              onClick={() => {
+                setTxHash(undefined);
+                setInitializeText("");
+                setURI("");
+              }}
+            >
+              Clear
+            </button>
+          </>
         )}
-        <button
-          className="clear-button"
-          onClick={() => {
-            setTxHash(undefined);
-            setInitializeText("");
-            setURI("");
-          }}
-        >
-          Clear
-        </button>
       </div>
     </>
   );

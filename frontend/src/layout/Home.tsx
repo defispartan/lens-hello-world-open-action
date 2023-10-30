@@ -5,8 +5,10 @@ import { Actions } from "./Act";
 import { Events } from "./Events";
 import { useLensHelloWorld } from "../context/LensHellowWorldContext";
 import { Create } from "./Create";
+import { useState } from "react";
 
 export const Home = () => {
+  const [activeSection, setActiveSection] = useState<string>("create");
   const { address, handle, clear, disconnect } = useLensHelloWorld();
 
   const { data: profiles } = useProfiles({
@@ -25,6 +27,26 @@ export const Home = () => {
   return (
     <div className="container">
       <h1>Lens Hello World Open Action</h1>
+      <div className="button-row">
+        <button
+          className={`button ${activeSection === "create" ? "active" : ""}`}
+          onClick={() => setActiveSection("create")}
+        >
+          Create
+        </button>
+        <button
+          className={`button ${activeSection === "actions" ? "active" : ""}`}
+          onClick={() => setActiveSection("actions")}
+        >
+          Actions
+        </button>
+        <button
+          className={`button ${activeSection === "events" ? "active" : ""}`}
+          onClick={() => setActiveSection("events")}
+        >
+          Events
+        </button>
+      </div>
       {showConnect && <ConnectKitButton />}
       {showNoLensProfiles && <p>No Lens Profiles found for this address</p>}
       {showSignInWithLens &&
@@ -51,13 +73,9 @@ export const Home = () => {
           </button>
         </>
       )}
-      {address && handle && (
-        <>
-          <Create />
-          <Actions />
-          <Events />
-        </>
-      )}
+      {activeSection === "create" && <Create />}
+      {activeSection === "actions" && <Actions />}
+      {activeSection === "events" && <Events />}
     </div>
   );
 };

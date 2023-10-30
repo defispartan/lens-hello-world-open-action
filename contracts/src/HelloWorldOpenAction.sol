@@ -35,8 +35,7 @@ contract HelloWorldOpenAction is HubRestricted, IPublicationActionModule {
         (string memory actionMessage) = abi.decode(params.actionModuleData, (string));
 
         bytes memory combinedMessage = abi.encodePacked(initMessage, " ", actionMessage);
-
-        _helloWorld.helloWorld(string(combinedMessage));
+        _helloWorld.helloWorld(string(combinedMessage), params.transactionExecutor);
         
         return combinedMessage;
     }

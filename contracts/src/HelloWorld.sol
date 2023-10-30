@@ -6,7 +6,7 @@ import {IHelloWorld} from "./interfaces/IHelloWorld.sol";
 contract HelloWorld is IHelloWorld {
     event Greet(string message, address actor);
 
-    function helloWorld(string memory message) public {
-        emit Greet(string(abi.encodePacked("Hello, World! ", message)), msg.sender);
+    function helloWorld(string memory message, address actor) external {
+        emit Greet(string(abi.encodePacked("Hello, World! ", message)), actor);
     }
 }

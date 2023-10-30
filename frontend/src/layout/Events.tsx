@@ -19,7 +19,7 @@ export const Events = () => {
   return (
     <>
       <h3 className="headerTop">Hello World Events</h3>
-      <div>
+      {address && <div>
         <input
           type="checkbox"
           id="filterCheckbox"
@@ -30,7 +30,7 @@ export const Events = () => {
         <label htmlFor="filterCheckbox" className="filter-label">
           Filter only events from my address
         </label>
-      </div>
+      </div>}
       {loading && <div className="spinner" />}
       {filteredEvents.length === 0 ? (
         <p>None</p>

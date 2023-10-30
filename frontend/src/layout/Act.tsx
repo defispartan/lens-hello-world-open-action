@@ -110,6 +110,7 @@ const ActionBox = ({
           type="text"
           value={actionText}
           onChange={(e) => setActionText(e.target.value)}
+          disabled={!profileId}
         />
         <button
           className="clear-button"
@@ -124,6 +125,7 @@ const ActionBox = ({
       <button
         className="button create-button active"
         onClick={() => execute(post, actionText)}
+        disabled={!profileId}
       >
         Create
       </button>
@@ -168,34 +170,32 @@ export const Actions = () => {
           <div>Sign in with Lens profile to execute action</div>
         </div>
       ) : (
-        <>
-          <div>
-            <input
-              type="checkbox"
-              id="filterCheckbox"
-              className="filter-label"
-              checked={filterOwnPosts}
-              onChange={(e) => setFilterOwnPosts(e.target.checked)}
-            />
-            <label htmlFor="filterCheckbox" className="filter-label">
-              Filter only posts from my profile
-            </label>
-          </div>
-          {loading && <div className="spinner" />}
-          {filteredPosts.length === 0 ? (
-            <p>None</p>
-          ) : (
-            filteredPosts.map((post, index) => (
-              <ActionBox
-                key={index}
-                post={post}
-                address={address}
-                profileId={profileId}
-                refresh={refresh}
-              />
-            ))
-          )}
-        </>
+        <div>
+          <input
+            type="checkbox"
+            id="filterCheckbox"
+            className="filter-label"
+            checked={filterOwnPosts}
+            onChange={(e) => setFilterOwnPosts(e.target.checked)}
+          />
+          <label htmlFor="filterCheckbox" className="filter-label">
+            Filter only posts from my profile
+          </label>
+        </div>
+      )}
+      {loading && <div className="spinner" />}
+      {filteredPosts.length === 0 ? (
+        <p>None</p>
+      ) : (
+        filteredPosts.map((post, index) => (
+          <ActionBox
+            key={index}
+            post={post}
+            address={address}
+            profileId={profileId}
+            refresh={refresh}
+          />
+        ))
       )}
     </>
   );

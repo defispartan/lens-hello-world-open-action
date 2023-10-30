@@ -2,6 +2,8 @@
 
 This repo contains smart contracts and a UI which demonstrates a Lens open action to call a helloWorld() function on an external contract.
 
+Live @ https://hello-world-open-action.vercel.app/ 
+
 - [Integration Guide](#integration-guide)
 
 - [Frontend](#frontend)

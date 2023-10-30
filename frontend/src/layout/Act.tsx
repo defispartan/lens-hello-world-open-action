@@ -122,13 +122,12 @@ const ActionBox = ({
           Clear
         </button>
       </div>
-      <button
+      {profileId && <button
         className="button create-button active"
         onClick={() => execute(post, actionText)}
-        disabled={!profileId}
       >
         Act
-      </button>
+      </button>}
       {createState && <p className="create-state-text">{createState}</p>}
       {txHash && (
         <a

@@ -69,60 +69,58 @@ export const Create = () => {
   return (
     <>
       <div className="pb-4">
-        {!address ? (
-          null
-        ) : !profileId ? (
-          null
-        ) : (
-          <div className="flex flex-1 flex-col">
+        {
+          address && profileId && (
             <div className="flex flex-1 flex-col">
-              <p className="my-2">
-                Content URI (link to content for the post)
-              </p>
-              <Input
-                type="text"
-                value={uri}
-                placeholder="URI"
-                onChange={(e) => setURI(e.target.value)}
-              />
-              <p className="my-2">
-                Initialize message (will be emitted in HelloWorld event)
-              </p>
-              <Input
-                placeholder="Message"
-                type="text"
-                value={initializeText}
-                onChange={(e) => setInitializeText(e.target.value)}
-              />
+              <div className="flex flex-1 flex-col">
+                <p className="my-2">
+                  Content URI (link to content for the post)
+                </p>
+                <Input
+                  type="text"
+                  value={uri}
+                  placeholder="URI"
+                  onChange={(e) => setURI(e.target.value)}
+                />
+                <p className="my-2">
+                  Initialize message (will be emitted in HelloWorld event)
+                </p>
+                <Input
+                  placeholder="Message"
+                  type="text"
+                  value={initializeText}
+                  onChange={(e) => setInitializeText(e.target.value)}
+                />
+                <Button
+                  className="mt-3"
+                  onClick={createPost}
+                >
+                  Create
+                </Button>
+              </div>
+              {createState && <p className="create-state-text">{createState}</p>}
+              {txHash && (
+                <a
+                  href={`${blockExplorerLink}${txHash}`}
+                  className="block-explorer-link"
+                >
+                  Block Explorer Link
+                </a>
+              )}
               <Button
-                className="mt-3"
-                onClick={createPost}
+                variant={'outline'}
+                className="my-3"
+                onClick={() => {
+                  setTxHash(undefined);
+                  setInitializeText("");
+                  setURI("");
+                }}
               >
-                Create
+                Clear
               </Button>
             </div>
-            {createState && <p className="create-state-text">{createState}</p>}
-            {txHash && (
-              <a
-                href={`${blockExplorerLink}${txHash}`}
-                className="block-explorer-link"
-              >
-                Block Explorer Link
-              </a>
-            )}
-            <Button
-              variant={'outline'}
-              className="my-3"
-              onClick={() => {
-                setTxHash(undefined);
-                setInitializeText("");
-                setURI("");
-              }}
-            >
-              Clear
-            </Button>
-          </div>
-        )}
+          )
+        }
       </div>
     </>
   );

@@ -151,28 +151,22 @@ export const Actions = () => {
 
   return (
     <>
-      {!address ? (
-        <div className="box post-box">
-          <div>Connect wallet to execute action</div>
-        </div>
-      ) : !profileId ? (
-        <div className="box post-box">
-          <div>Sign in with Lens profile to execute action</div>
-        </div>
-      ) : (
-        <div className="my-3">
-          <input
-            type="checkbox"
-            id="filterCheckbox"
-            className="mr-3"
-            checked={filterOwnPosts}
-            onChange={(e) => setFilterOwnPosts(e.target.checked)}
-          />
-          <label htmlFor="filterCheckbox">
-            Filter only posts from my profile
-          </label>
-        </div>
-      )}
+      {
+        address && profileId && (
+          <div className="my-3">
+            <input
+              type="checkbox"
+              id="filterCheckbox"
+              className="mr-3"
+              checked={filterOwnPosts}
+              onChange={(e) => setFilterOwnPosts(e.target.checked)}
+            />
+            <label htmlFor="filterCheckbox">
+              Filter only posts from my profile
+            </label>
+          </div>
+        )
+      }
       {loading && <div className="spinner" />}
       {filteredPosts.length === 0 ? (
         <p>None</p>

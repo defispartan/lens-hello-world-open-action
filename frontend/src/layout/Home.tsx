@@ -109,7 +109,7 @@ const showSignInWithLens =
             onClick={() => open()}
           >
             <Unplug className="mr-2 h-4 w-4" />
-            Connect Wallet</Button>
+            Connect Wallet to Create Post</Button>
         )
       }
       {showNoLensProfiles && <p>No Lens Profiles found for this address</p>}

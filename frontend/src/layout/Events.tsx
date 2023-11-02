@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useLensHelloWorld } from "../context/LensHellowWorldContext";
 import { blockExplorerLink } from "../utils/constants";
-import { Input } from "@/components/ui/input"
 
 export const Events = () => {
   const [filterOwnEvents, setFilterOwnEvents] = useState(false);

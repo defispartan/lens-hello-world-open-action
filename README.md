@@ -1,6 +1,6 @@
-# Lens Hello World Open Action
+# Lens Hello World Smart Post
 
-This repo contains smart contracts and a UI which demonstrates a Lens open action to call a helloWorld() function on an external contract.
+This repo contains smart contracts and a UI which demonstrates a Lens Smart Post to call a helloWorld() function on an external contract.
 
 To get started, you can create a profile on the Mumbai deployment of Lens V2 [here](https://web-git-lens-v2-testnet-heyxyz.vercel.app/).
 

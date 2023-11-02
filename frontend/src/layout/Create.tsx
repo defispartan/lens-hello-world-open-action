@@ -9,6 +9,8 @@ import {
 import { lensHubAbi } from "../utils/lensHubAbi";
 import { useWalletClient } from "wagmi";
 import { publicClient } from "../main";
+import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
 
 export const Create = () => {
   const { address, profileId, refresh } = useLensHelloWorld();
@@ -66,40 +68,39 @@ export const Create = () => {
 
   return (
     <>
-      <h3 className="headerTop">Create Hello World Smart Post</h3>
-      <div className="box">
+      <div className="pb-4">
         {!address ? (
-          <div>Connect wallet to create post</div>
+          null
         ) : !profileId ? (
-          <div>Sign in with Lens Profile to create post</div>
+          null
         ) : (
-          <>
-            <label htmlFor="initializeTextId">
-              Content URI (link to content for the post)
-            </label>
-            <input
-              id="uriId"
-              className="inputBox"
-              type="text"
-              value={uri}
-              onChange={(e) => setURI(e.target.value)}
-            />
-            <label htmlFor="initializeTextId">
-              Initialize message (will be emitted in HelloWorld event)
-            </label>
-            <input
-              id="initializeTextId"
-              className="inputBox"
-              type="text"
-              value={initializeText}
-              onChange={(e) => setInitializeText(e.target.value)}
-            />
-            <button
-              className="button create-button active"
-              onClick={createPost}
-            >
-              Create
-            </button>
+          <div className="flex flex-1 flex-col">
+            <div className="flex flex-1 flex-col">
+              <p className="my-2">
+                Content URI (link to content for the post)
+              </p>
+              <Input
+                type="text"
+                value={uri}
+                placeholder="URI"
+                onChange={(e) => setURI(e.target.value)}
+              />
+              <p className="my-2">
+                Initialize message (will be emitted in HelloWorld event)
+              </p>
+              <Input
+                placeholder="Message"
+                type="text"
+                value={initializeText}
+                onChange={(e) => setInitializeText(e.target.value)}
+              />
+              <Button
+                className="mt-3"
+                onClick={createPost}
+              >
+                Create
+              </Button>
+            </div>
             {createState && <p className="create-state-text">{createState}</p>}
             {txHash && (
               <a
@@ -109,8 +110,9 @@ export const Create = () => {
                 Block Explorer Link
               </a>
             )}
-            <button
-              className="clear-button"
+            <Button
+              variant={'outline'}
+              className="my-3"
               onClick={() => {
                 setTxHash(undefined);
                 setInitializeText("");
@@ -118,8 +120,8 @@ export const Create = () => {
               }}
             >
               Clear
-            </button>
-          </>
+            </Button>
+          </div>
         )}
       </div>
     </>

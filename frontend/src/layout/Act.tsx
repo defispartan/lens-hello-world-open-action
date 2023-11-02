@@ -11,6 +11,8 @@ import { PostCreatedEventFormatted } from "../utils/types";
 import { fetchInitMessage } from "../utils/fetchInitMessage";
 import { useLensHelloWorld } from "../context/LensHellowWorldContext";
 import { encodeAbiParameters, encodeFunctionData } from "viem";
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
 
 const ActionBox = ({
   post,
@@ -77,62 +79,52 @@ const ActionBox = ({
   };
 
   return (
-    <div className="box post-box">
-      <div className="centered-box">
-        <div className="field">ProfileID: {post.args.postParams.profileId}</div>
-        <div className="field">PublicationID: {post.args.pubId}</div>
-        <div className="header-text">
+    <div className="flex flex-col border rounded-xl px-5 py-3 mb-3 justify-center">
+      <div className="flex flex-col justify-center items-center">
+        <p>ProfileID: {post.args.postParams.profileId}</p>
+        <p>PublicationID: {post.args.pubId}</p>
+        <p>
           Initialize Message: {fetchInitMessage(post)}
-        </div>
-        <div className="field">
-          <img
-            src={post.args.postParams.contentURI}
-            className="uri"
-            alt="Post"
-          />
-        </div>
-        <div className="field">
+        </p>
+        <img
+          className="my-3 rounded-2xl"
+          src={post.args.postParams.contentURI}
+          alt="Post"
+        />
+        <Button asChild variant='link'>
           <a
             href={`${blockExplorerLink}${post.transactionHash}`}
             target="_blank"
           >
             Txn Link
           </a>
-        </div>
+        </Button>
+        
       </div>
-      <div className="inline-content">
-        <label htmlFor={`initializeTextId-${post.args.pubId}`}>
+      <div >
+        <p className="mb-3">
           Action message (will be emitted in HelloWorld event)
-        </label>
-        <input
+        </p>
+        <Input
           id={`initializeTextId-${post.args.pubId}`}
-          className="inputBox"
           type="text"
           value={actionText}
           onChange={(e) => setActionText(e.target.value)}
           disabled={!profileId}
         />
-        <button
-          className="clear-button"
-          onClick={() => {
-            setTxHash(undefined);
-            setActionText("");
-          }}
-        >
-          Clear
-        </button>
       </div>
-      {profileId && <button
-        className="button create-button active"
-        onClick={() => execute(post, actionText)}
-      >
-        Act
-      </button>}
-      {createState && <p className="create-state-text">{createState}</p>}
+      {profileId && (
+        <Button
+          className="mt-3"
+          onClick={() => execute(post, actionText)}
+        >
+          Post Message
+        </Button>
+      )}
+      {createState && <p className="mt-2">{createState}</p>}
       {txHash && (
         <a
           href={`${blockExplorerLink}${txHash}`}
-          className="block-explorer-link"
         >
           Block Explorer Link
         </a>
@@ -159,7 +151,6 @@ export const Actions = () => {
 
   return (
     <>
-      <h3 className="headerTop">Posts w/ Hello World Open Action</h3>
       {!address ? (
         <div className="box post-box">
           <div>Connect wallet to execute action</div>
@@ -169,15 +160,15 @@ export const Actions = () => {
           <div>Sign in with Lens profile to execute action</div>
         </div>
       ) : (
-        <div>
+        <div className="my-3">
           <input
             type="checkbox"
             id="filterCheckbox"
-            className="filter-label"
+            className="mr-3"
             checked={filterOwnPosts}
             onChange={(e) => setFilterOwnPosts(e.target.checked)}
           />
-          <label htmlFor="filterCheckbox" className="filter-label">
+          <label htmlFor="filterCheckbox">
             Filter only posts from my profile
           </label>
         </div>

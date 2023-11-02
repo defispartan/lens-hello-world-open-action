@@ -5,6 +5,7 @@ import { configureChains } from "wagmi";
 import { polygonMumbai } from "wagmi/chains";
 import { jsonRpcProvider } from "wagmi/providers/jsonRpc";
 import { rpc } from "./utils/constants.tsx";
+import './index.css'
 
 export const { publicClient } = configureChains(
   [polygonMumbai],

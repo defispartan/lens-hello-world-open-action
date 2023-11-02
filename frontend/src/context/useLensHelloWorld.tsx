@@ -37,6 +37,7 @@ export const LensHelloWorldProvider: FC<LensHelloWorldProviderProps> = ({
   const [loginData, setLoginData] = useState<LoginData>();
 
   const connect = (loginDataParam: LoginData) => {
+    console.log('loginDataParam: ', loginDataParam)
     setLoginData(loginDataParam);
   };
 
@@ -62,7 +63,7 @@ export const LensHelloWorldProvider: FC<LensHelloWorldProviderProps> = ({
       ? parseInt(savedCurrentBlock)
       : openActionsContractStartBlock;
 
-    const currentBlock = await publicClient({ chainId: 1 }).getBlockNumber();
+    const currentBlock = await publicClient({ chainId: 80001 }).getBlockNumber();
 
     const postEventsMap = new Map(
       savedPostEvents.map((event) => [event.transactionHash, event])
@@ -83,7 +84,7 @@ export const LensHelloWorldProvider: FC<LensHelloWorldProviderProps> = ({
       });
 
       const helloWorldEvents = await publicClient({
-        chainId: 1,
+        chainId: 80001,
       }).getContractEvents({
         address: helloWorldContractAddress,
         abi: helloWorldAbi,

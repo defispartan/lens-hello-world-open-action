@@ -121,7 +121,7 @@ const ActionBox = ({
           Post Message
         </Button>
       )}
-      {createState && <p className="mt-2">{createState}</p>}
+      {createState && <p className="mt-2 text-primary">{createState}</p>}
       {txHash && (
         <a
           href={`${blockExplorerLink}${txHash}`}

@@ -19,7 +19,7 @@ The deployed action module addresses are:
 
 - [Mumbai Testnet](https://mumbai.polygonscan.com/address/0xfd2F3677147047F327FA5506D94D54d93080C7D9) 
 
-- Polygon Mainnet - Coming Soon 
+- [Polygon Mainnet](https://polygonscan.com/address/0x65a37d58Ed258cf5BDEa05ed67d9A8922A179b3E)
 
 
 To integrate this open action, support must be added to create and execute the action.
@@ -106,7 +106,9 @@ For a complete example of executing this open action on a publication with viem,
 
 ### Polygon Mainnet
 
-Coming Soon
+[HelloWorld.sol](https://polygonscan.com/address/0x67eF9e991F3A87ACE457ab1f28A4C8804d971fDb) 
+
+[HelloWorldOpenAction.sol](https://polygonscan.com/address/0x65a37d58Ed258cf5BDEa05ed67d9A8922A179b3E) 
 
 
 ### To Deploy Your Own
@@ -119,7 +121,7 @@ Coming Soon
 
 ## Frontend
 
-Live @ https://hello-world-open-action.vercel.app/
+Polygon deployment is live @ https://hello-world-open-action.vercel.app/
 
 To run locally, clone repo, switch to frontend directory, make sure you have [bun installed](https://bun.sh/docs/installation) and run `bun install && bun run dev` 
 

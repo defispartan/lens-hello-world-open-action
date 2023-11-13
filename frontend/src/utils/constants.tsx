@@ -1,10 +1,10 @@
 export const helloWorldContractAddress =
-  "0xEcfeeE4dcEa32f109da4Ad4D97453cC2d998B60A";
-export const helloWorldContractStartBlock = 41812097;
+  "0x67eF9e991F3A87ACE457ab1f28A4C8804d971fDb";
+export const helloWorldContractStartBlock = 49457217;
 export const openActionContractAddress =
-  "0xfd2F3677147047F327FA5506D94D54d93080C7D9";
-export const openActionsContractStartBlock = 41812097;
+  "0x65a37d58Ed258cf5BDEa05ed67d9A8922A179b3E";
+export const openActionsContractStartBlock = 49457217;
 
-export const lensHubProxyAddress = "0xC1E77eE73403B8a7478884915aA599932A677870";
-export const blockExplorerLink = "https://mumbai.polygonscan.com/tx/";
-export const rpc = "https://rpc.ankr.com/polygon_mumbai";
+export const lensHubProxyAddress = "0xDb46d1Dc155634FbC732f92E853b10B288AD5a1d";
+export const blockExplorerLink = "https://polygonscan.com/tx/";
+export const rpc = "https://polygon.llamarpc.com";

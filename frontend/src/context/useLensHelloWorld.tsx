@@ -43,7 +43,6 @@ export const LensHelloWorldProvider: FC<LensHelloWorldProviderProps> = ({
 
   const refresh = useCallback(async () => {
     setLoading(true);
-    const savedCurrentBlock = localStorage.getItem("currentBlock");
     const savedPostEvents: PostCreatedEventFormatted[] = JSON.parse(
       localStorage.getItem("postEvents") || "[]"
     );
@@ -59,9 +58,7 @@ export const LensHelloWorldProvider: FC<LensHelloWorldProviderProps> = ({
       setGreetings(savedHelloWorldEvents);
     }
 
-    const startBlock = savedCurrentBlock
-      ? parseInt(savedCurrentBlock)
-      : openActionsContractStartBlock;
+    const startBlock = BigInt(openActionsContractStartBlock);
 
     const currentBlock = await publicClient({ chainId: 80001 }).getBlockNumber();
 
@@ -72,50 +69,46 @@ export const LensHelloWorldProvider: FC<LensHelloWorldProviderProps> = ({
       savedHelloWorldEvents.map((event) => [event.transactionHash, event])
     );
 
-    for (let i = startBlock; i < currentBlock; i += 1000) {
-      const toBlock = i + 999 > currentBlock ? currentBlock : i + 999;
+    const postEvents = await publicClient({ chainId: 80001 }).getContractEvents({
+      address: lensHubProxyAddress,
+      abi: lensHubEventsAbi,
+      eventName: "PostCreated",
+      fromBlock: startBlock,
+      toBlock: "latest",
+    });
 
-      const postEvents = await publicClient({ chainId: 1 }).getContractEvents({
-        address: lensHubProxyAddress,
-        abi: lensHubEventsAbi,
-        eventName: "PostCreated",
-        fromBlock: BigInt(i),
-        toBlock: BigInt(toBlock),
-      });
+    const helloWorldEvents = await publicClient({
+      chainId: 80001,
+    }).getContractEvents({
+      address: helloWorldContractAddress,
+      abi: helloWorldAbi,
+      eventName: "Greet",
+      fromBlock: startBlock,
+      toBlock: "latest",
+    });
 
-      const helloWorldEvents = await publicClient({
-        chainId: 80001,
-      }).getContractEvents({
-        address: helloWorldContractAddress,
-        abi: helloWorldAbi,
-        eventName: "Greet",
-        fromBlock: BigInt(i),
-        toBlock: BigInt(toBlock),
-      });
+    const postEventsParsed = postEvents as unknown as PostCreatedEvent[];
+    const helloWorldEventsParsed =
+      helloWorldEvents as unknown as GreetEvent[];
 
-      const postEventsParsed = postEvents as unknown as PostCreatedEvent[];
-      const helloWorldEventsParsed =
-        helloWorldEvents as unknown as GreetEvent[];
+    const filteredEvents = postEventsParsed.filter((event) =>
+      event.args.postParams.actionModules.includes(openActionContractAddress)
+    );
 
-      const filteredEvents = postEventsParsed.filter((event) =>
-        event.args.postParams.actionModules.includes(openActionContractAddress)
-      );
+    const serializablePostEvents = filteredEvents.map((event) =>
+      convertPostEventToSerializable(event)
+    );
 
-      const serializablePostEvents = filteredEvents.map((event) =>
-        convertPostEventToSerializable(event)
-      );
+    const serializableGreetEvents = helloWorldEventsParsed.map((event) =>
+      convertGreetEventToSerializable(event)
+    );
 
-      const serializableGreetEvents = helloWorldEventsParsed.map((event) =>
-        convertGreetEventToSerializable(event)
-      );
-
-      serializablePostEvents.forEach((event) =>
-        postEventsMap.set(event.transactionHash, event)
-      );
-      serializableGreetEvents.forEach((event) =>
-        helloWorldEventsMap.set(event.transactionHash, event)
-      );
-    }
+    serializablePostEvents.forEach((event) =>
+      postEventsMap.set(event.transactionHash, event)
+    );
+    serializableGreetEvents.forEach((event) =>
+      helloWorldEventsMap.set(event.transactionHash, event)
+    );
 
     const allPostEvents = Array.from(postEventsMap.values());
     const allHelloWorldEvents = Array.from(helloWorldEventsMap.values());

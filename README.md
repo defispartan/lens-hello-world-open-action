@@ -126,3 +126,5 @@ To run locally, clone repo, switch to frontend directory, make sure you have [bu
 Contract address are configured in `frontend/src/constants.ts` 
 
 The `frontend/src/layout` components `Create`, `Act`, and `Events` contain code to create a post with this action, execute this action on a post, and display HelloWorld.sol events respectively. 
+
+Setup VITE_ALCHEMY_RPC_URL environment variable: copy `.env.example` to `.env` in frontend directory, input VITE_ALCHEMY_RPC_URL

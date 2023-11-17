@@ -9,4 +9,4 @@ export const lensHubProxyAddress = "0xC1E77eE73403B8a7478884915aA599932A677870";
 export const blockExplorerLink = "https://mumbai.polygonscan.com/tx/";
 // WARNING - this will be exposed client-side should only bre used for development
 // Alchemy supports unlimite eth_getLogs for requests with < 10k logs
-export const rpc = `https://polygon-mumbai.g.alchemy.com/v2/${import.meta.env.VITE_ALCHEMY_RPC_KEY}`;
+export const rpc = `https://polygon-mumbai.g.alchemy.com/v2/${import.meta.env.VITE_ALCHEMY_API_KEY}`;

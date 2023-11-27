@@ -18,16 +18,15 @@ export const Events = () => {
 
   return (
     <>
-      <h3 className="headerTop">Hello World Events</h3>
-      {address && <div>
+      {address && <div className="my-3">
         <input
           type="checkbox"
+          className="mr-3"
           id="filterCheckbox"
-          className="filter-label"
           checked={filterOwnEvents}
           onChange={(e) => setFilterOwnEvents(e.target.checked)}
         />
-        <label htmlFor="filterCheckbox" className="filter-label">
+        <label htmlFor="filterCheckbox" >
           Filter only events from my address
         </label>
       </div>}
@@ -36,8 +35,8 @@ export const Events = () => {
         <p>None</p>
       ) : (
         filteredEvents.map((event, index) => (
-          <div key={index} className="box post-box">
-            <div className="inline-content">{event.args.message}</div>
+          <div key={index} className="border p-3 rounded-xl mt-3 w-[500px]">
+            <p className="font-geist-medium">{event.args.message}</p>
             <div className="inline-content">from</div>
             <div className="inline-content">{event.args.actor}</div>
             <div className="header-text">

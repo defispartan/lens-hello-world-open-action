@@ -1,16 +1,12 @@
 import { useState } from "react";
-import { useLensHelloWorld } from "../context/LensHellowWorldContext";
+import { useLensHelloWorld } from "../context/LensHelloWorldContext";
 import { encodeAbiParameters, encodeFunctionData } from "viem";
-import {
-  blockExplorerLink,
-  lensHubProxyAddress,
-  openActionContractAddress,
-} from "../utils/constants";
+import { uiConfig } from "../utils/constants";
 import { lensHubAbi } from "../utils/lensHubAbi";
 import { useWalletClient } from "wagmi";
 import { publicClient } from "../main";
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 export const Create = () => {
   const { address, profileId, refresh } = useLensHelloWorld();
@@ -30,7 +26,7 @@ export const Create = () => {
     const args = {
       profileId: BigInt(profileId!),
       contentURI: uri,
-      actionModules: [openActionContractAddress as `0x${string}`],
+      actionModules: [uiConfig.openActionContractAddress],
       actionModulesInitDatas: [encodedInitData],
       referenceModule:
         "0x0000000000000000000000000000000000000000" as `0x${string}`,
@@ -46,7 +42,7 @@ export const Create = () => {
     setCreateState("PENDING IN WALLET");
     try {
       const hash = await walletClient!.sendTransaction({
-        to: lensHubProxyAddress,
+        to: uiConfig.lensHubProxyAddress,
         account: address,
         data: calldata,
       });
@@ -69,58 +65,53 @@ export const Create = () => {
   return (
     <>
       <div className="pb-4">
-        {
-          address && profileId && (
+        {address && profileId && (
+          <div className="flex flex-1 flex-col">
             <div className="flex flex-1 flex-col">
-              <div className="flex flex-1 flex-col">
-                <p className="my-2">
-                  Content URI (link to content for the post)
-                </p>
-                <Input
-                  type="text"
-                  value={uri}
-                  placeholder="URI"
-                  onChange={(e) => setURI(e.target.value)}
-                />
-                <p className="my-2">
-                  Initialize message (will be emitted in HelloWorld event)
-                </p>
-                <Input
-                  placeholder="Message"
-                  type="text"
-                  value={initializeText}
-                  onChange={(e) => setInitializeText(e.target.value)}
-                />
-                <Button
-                  className="mt-3"
-                  onClick={createPost}
-                >
-                  Create
-                </Button>
-              </div>
-              {createState && <p className="create-state-text">{createState}</p>}
-              {txHash && (
-                <a
-                  href={`${blockExplorerLink}${txHash}`}
-                  className="block-explorer-link"
-                >
-                  Block Explorer Link
-                </a>
-              )}
-              <Button
-                variant={'outline'}
-                className="my-3"
-                onClick={() => {
-                  setTxHash(undefined);
-                  setInitializeText("");
-                  setURI("");
-                }}
-              >
-                Clear
+              <p className="my-2">Content URI (link to content for the post)</p>
+              <Input
+                type="text"
+                value={uri}
+                placeholder="URI"
+                onChange={(e) => setURI(e.target.value)}
+              />
+              <p className="my-2">
+                Initialize message (will be emitted in HelloWorld event)
+              </p>
+              <Input
+                placeholder="Message"
+                type="text"
+                value={initializeText}
+                onChange={(e) => setInitializeText(e.target.value)}
+              />
+              <Button className="mt-3" onClick={createPost}>
+                Create
               </Button>
             </div>
-          )
-        }
+            {createState && <p className="create-state-text">{createState}</p>}
+            {txHash && (
+              <a
+                href={`${uiConfig.blockExplorerLink}${txHash}`}
+                className="block-explorer-link"
+                target="_blank"
+              >
+                Block Explorer Link
+              </a>
+            )}
+            <Button
+              variant={"outline"}
+              className="my-3"
+              onClick={() => {
+                setTxHash(undefined);
+                setInitializeText("");
+                setURI("");
+                setCreateState(undefined);
+              }}
+            >
+              Clear
+            </Button>
+          </div>
+        )}
       </div>
     </>
   );

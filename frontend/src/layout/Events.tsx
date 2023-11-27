@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { useLensHelloWorld } from "../context/LensHellowWorldContext";
-import { blockExplorerLink } from "../utils/constants";
+import { useLensHelloWorld } from "../context/LensHelloWorldContext";
+import { uiConfig } from "../utils/constants";
 
 export const Events = () => {
   const [filterOwnEvents, setFilterOwnEvents] = useState(false);
@@ -18,18 +18,20 @@ export const Events = () => {
 
   return (
     <>
-      {address && <div className="my-3">
-        <input
-          type="checkbox"
-          className="mr-3"
-          id="filterCheckbox"
-          checked={filterOwnEvents}
-          onChange={(e) => setFilterOwnEvents(e.target.checked)}
-        />
-        <label htmlFor="filterCheckbox" >
-          Filter only events from my address
-        </label>
-      </div>}
+      {address && (
+        <div className="my-3">
+          <input
+            type="checkbox"
+            className="mr-3"
+            id="filterCheckbox"
+            checked={filterOwnEvents}
+            onChange={(e) => setFilterOwnEvents(e.target.checked)}
+          />
+          <label htmlFor="filterCheckbox">
+            Filter only events from my address
+          </label>
+        </div>
+      )}
       {loading && <div className="spinner" />}
       {filteredEvents.length === 0 ? (
         <p>None</p>
@@ -40,7 +42,9 @@ export const Events = () => {
             <div className="inline-content">from</div>
             <div className="inline-content">{event.args.actor}</div>
             <div className="header-text">
-              <a href={`${blockExplorerLink}${event.transactionHash}`}>Link</a>
+              <a href={`${uiConfig.blockExplorerLink}${event.transactionHash}`}>
+                Link
+              </a>
             </div>
           </div>
         ))

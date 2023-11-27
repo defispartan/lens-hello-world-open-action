@@ -81,13 +81,17 @@ label {
 }
 
 .block-explorer-link {
-  color: white;
+  color: black;
   font-size: 14px;
+  display: flex;
+  justify-content: center;
 }
 
 .create-state-text {
-  color: white;
+  color: black;
   margin-top: 30px;
+  display: flex;
+  justify-content: center;
 }
 
 .post-box {

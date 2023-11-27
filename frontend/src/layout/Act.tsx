@@ -1,18 +1,15 @@
 import { useState } from "react";
 import { publicClient } from "../main";
-import {
-  lensHubProxyAddress,
-  openActionContractAddress,
-  blockExplorerLink,
-} from "../utils/constants";
+import { mode, uiConfig } from "../utils/constants";
 import { lensHubAbi } from "../utils/lensHubAbi";
 import { useWalletClient } from "wagmi";
 import { PostCreatedEventFormatted } from "../utils/types";
 import { fetchInitMessage } from "../utils/fetchInitMessage";
-import { useLensHelloWorld } from "../context/LensHellowWorldContext";
+import { useLensHelloWorld } from "../context/LensHelloWorldContext";
 import { encodeAbiParameters, encodeFunctionData } from "viem";
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { usePublications } from "@lens-protocol/react-web";
 
 const ActionBox = ({
   post,
@@ -45,7 +42,7 @@ const ActionBox = ({
       actorProfileId: BigInt(profileId || 0),
       referrerProfileIds: [],
       referrerPubIds: [],
-      actionModuleAddress: openActionContractAddress as `0x${string}`,
+      actionModuleAddress: uiConfig.openActionContractAddress,
       actionModuleData: encodedActionData as `0x${string}`,
     };
 
@@ -58,7 +55,7 @@ const ActionBox = ({
     setCreateState("PENDING IN WALLET");
     try {
       const hash = await walletClient!.sendTransaction({
-        to: lensHubProxyAddress,
+        to: uiConfig.lensHubProxyAddress,
         account: address,
         data: calldata as `0x${string}`,
       });
@@ -83,25 +80,22 @@ const ActionBox = ({
       <div className="flex flex-col justify-center items-center">
         <p>ProfileID: {post.args.postParams.profileId}</p>
         <p>PublicationID: {post.args.pubId}</p>
-        <p>
-          Initialize Message: {fetchInitMessage(post)}
-        </p>
+        <p>Initialize Message: {fetchInitMessage(post)}</p>
         <img
           className="my-3 rounded-2xl"
           src={post.args.postParams.contentURI}
           alt="Post"
         />
-        <Button asChild variant='link'>
+        <Button asChild variant="link">
           <a
-            href={`${blockExplorerLink}${post.transactionHash}`}
+            href={`${uiConfig.blockExplorerLink}${post.transactionHash}`}
             target="_blank"
           >
             Txn Link
           </a>
         </Button>
-        
       </div>
-      <div >
+      <div>
         <p className="mb-3">
           Action message (will be emitted in HelloWorld event)
         </p>
@@ -114,17 +108,16 @@ const ActionBox = ({
         />
       </div>
       {profileId && (
-        <Button
-          className="mt-3"
-          onClick={() => execute(post, actionText)}
-        >
+        <Button className="mt-3" onClick={() => execute(post, actionText)}>
           Post Message
         </Button>
       )}
       {createState && <p className="mt-2 text-primary">{createState}</p>}
       {txHash && (
         <a
-          href={`${blockExplorerLink}${txHash}`}
+          href={`${uiConfig.blockExplorerLink}${txHash}`}
+          target="_blank"
+          className="block-explorer-link"
         >
           Block Explorer Link
         </a>
@@ -136,12 +129,20 @@ const ActionBox = ({
 export const Actions = () => {
   const [filterOwnPosts, setFilterOwnPosts] = useState(false);
   const { address, profileId, posts, refresh, loading } = useLensHelloWorld();
-
+  const { data } = usePublications({
+    where: {
+      withOpenActions: [{ address: uiConfig.helloWorldContractAddress }],
+    },
+  });
+  console.log(data);
+  const activePosts = mode === "api" ? [] : posts;
+  console.log("ACTIVE POSTS");
+  console.log(activePosts);
   let filteredPosts = filterOwnPosts
-    ? posts.filter(
+    ? activePosts.filter(
         (post) => post.args.postParams.profileId === profileId?.toString()
       )
-    : posts;
+    : activePosts;
 
   filteredPosts = filteredPosts.sort((a, b) => {
     const blockNumberA = parseInt(a.blockNumber, 10);
@@ -151,22 +152,20 @@ export const Actions = () => {
 
   return (
     <>
-      {
-        address && profileId && (
-          <div className="my-3">
-            <input
-              type="checkbox"
-              id="filterCheckbox"
-              className="mr-3"
-              checked={filterOwnPosts}
-              onChange={(e) => setFilterOwnPosts(e.target.checked)}
-            />
-            <label htmlFor="filterCheckbox">
-              Filter only posts from my profile
-            </label>
-          </div>
-        )
-      }
+      {address && profileId && (
+        <div className="my-3">
+          <input
+            type="checkbox"
+            id="filterCheckbox"
+            className="mr-3"
+            checked={filterOwnPosts}
+            onChange={(e) => setFilterOwnPosts(e.target.checked)}
+          />
+          <label htmlFor="filterCheckbox">
+            Filter only posts from my profile
+          </label>
+        </div>
+      )}
       {loading && <div className="spinner" />}
       {filteredPosts.length === 0 ? (
         <p>None</p>

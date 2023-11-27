@@ -17,9 +17,9 @@ To get started, you can create a profile on the Mumbai deployment of Lens V2 [he
 
 The deployed action module addresses are: 
 
-- [Mumbai Testnet](https://mumbai.polygonscan.com/address/0xfd2F3677147047F327FA5506D94D54d93080C7D9) 
+- [Polygon Mainnet (coming soon)](https://polygonscan.com/address/0x65a37d58Ed258cf5BDEa05ed67d9A8922A179b3E)
 
-- [Polygon Mainnet](https://polygonscan.com/address/0x65a37d58Ed258cf5BDEa05ed67d9A8922A179b3E)
+- [Mumbai Testnet](https://mumbai.polygonscan.com/address/0x7AAc74F75ac038478922E1dE753260fA20cf3CB8) 
 
 
 To integrate this open action, support must be added to create and execute the action.
@@ -98,30 +98,26 @@ For a complete example of executing this open action on a publication with viem,
 ## Smart Contracts
 
 
-### Mumbai Testnet
-
-[HelloWorld.sol](https://mumbai.polygonscan.com/address/0xEcfeeE4dcEa32f109da4Ad4D97453cC2d998B60A) 
-
-[HelloWorldOpenAction.sol](https://mumbai.polygonscan.com/address/0xfd2F3677147047F327FA5506D94D54d93080C7D9) 
-
 ### Polygon Mainnet
 
-[HelloWorld.sol](https://polygonscan.com/address/0x67eF9e991F3A87ACE457ab1f28A4C8804d971fDb) 
+Coming soon
 
-[HelloWorldOpenAction.sol](https://polygonscan.com/address/0x65a37d58Ed258cf5BDEa05ed67d9A8922A179b3E) 
+### Mumbai Testnet
 
+[HelloWorld.sol](https://mumbai.polygonscan.com/address/0x89D7Fe2f4411487a0691CF8E9461f21Dd29Ba496) 
+
+[HelloWorldOpenAction.sol](https://mumbai.polygonscan.com/address/0x7AAc74F75ac038478922E1dE753260fA20cf3CB8) 
 
 ### To Deploy Your Own
 
-1.) Switch to contracts directory (`cd contracts`) and setup environment variables: copy `.env.example` to `.env`, input deployment values in `.env`, and run `source .env` (or equivalent on your OS) 
+1.) Switch to contracts directory (`cd contracts`) and setup environment variables: copy `.env.example` to `.env`, input deployment values values in `.env`, and run `source .env` (or equivalent on your OS) 
 
-2.) Run script to deploy `HelloWorld.sol` and `HelloWorldOpenAction.sol` to Mumbai: `forge script script/HelloWorld.s.sol:HelloWorldScript --rpc-url $MUMBAI_RPC_URL --broadcast --verify -vvvv` 
-
+2.) Run script to deploy `HelloWorld.sol` and `HelloWorldOpenAction.sol` to Mumbai: `forge script script/HelloWorld.s.sol:HelloWorldScript --rpc-url INSERT_RPC_HERE --broadcast --verify -vvvv` 
 
 
 ## Frontend
 
-Polygon deployment is live @ https://hello-world-open-action.vercel.app/
+Mumbai deployment is live @ https://hello-world-open-action.vercel.app/
 
 To run locally, clone repo, switch to frontend directory, make sure you have [bun installed](https://bun.sh/docs/installation) and run `bun install && bun run dev` 
 

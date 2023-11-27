@@ -14,7 +14,7 @@ contract HelloWorldScript is Script {
         vm.startBroadcast(deployerPrivateKey);
 
         IHelloWorld helloWorld = new HelloWorld();
-        address lensHubProxyAddress = 0xC1E77eE73403B8a7478884915aA599932A677870;
+        address lensHubProxyAddress = vm.envAddress("LENS_HUB_PROXY");
 
         new HelloWorldOpenAction(lensHubProxyAddress, address(helloWorld));
 

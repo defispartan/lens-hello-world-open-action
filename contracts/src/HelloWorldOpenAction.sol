@@ -4,15 +4,20 @@ pragma solidity ^0.8.18;
 
 import {HubRestricted} from 'lens/HubRestricted.sol';
 import {Types} from 'lens/Types.sol';
-import {IPublicationActionModule} from './interfaces/IPublicationActionModule.sol';
-import {IHelloWorld} from './interfaces/IHelloWorld.sol';
+import {IPublicationActionModule} from 'lens/IPublicationActionModule.sol';
+import {LensModuleMetadata} from 'lens/LensModuleMetadata.sol';
+import {IHelloWorld} from './IHelloWorld.sol';
 
-contract HelloWorldOpenAction is HubRestricted, IPublicationActionModule {
+contract HelloWorldOpenAction is HubRestricted, IPublicationActionModule, LensModuleMetadata {
     mapping(uint256 profileId => mapping(uint256 pubId => string initMessage)) internal _initMessages;
     IHelloWorld internal _helloWorld;
     
-    constructor(address lensHubProxyContract, address helloWorldContract) HubRestricted(lensHubProxyContract) {
+    constructor(address lensHubProxyContract, address helloWorldContract, address moduleOwner) HubRestricted(lensHubProxyContract) LensModuleMetadata(moduleOwner) {
         _helloWorld = IHelloWorld(helloWorldContract);
+    }
+
+    function supportsInterface(bytes4 interfaceID) public pure override returns (bool) {
+        return interfaceID == type(IPublicationActionModule).interfaceId || super.supportsInterface(interfaceID);
     }
 
     function initializePublicationAction(

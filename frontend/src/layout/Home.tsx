@@ -10,11 +10,10 @@ import { Button } from "@/components/ui/button";
 import { useWeb3Modal } from "@web3modal/wagmi/react";
 import { PenLine, Rows, Activity, LogIn, Unplug } from "lucide-react";
 import { network } from "@/utils/constants";
-import { disconnect } from "wagmi/actions";
 
 export const Home = () => {
   const [activeSection, setActiveSection] = useState<string>("create");
-  const { address, handle, connect } = useLensHelloWorld();
+  const { address, handle, connect, disconnect } = useLensHelloWorld();
   const { open } = useWeb3Modal();
   const { execute: executeLogin, data: loginData } = useLogin();
   const [connected, setConnected] = useState(false);
@@ -48,6 +47,7 @@ export const Home = () => {
       handle={handle}
       executeLogin={logIn}
       open={open}
+      disconnect={disconnect}
     />
   );
 };
@@ -59,6 +59,7 @@ function Profiles({
   handle,
   executeLogin,
   open,
+  disconnect,
 }) {
   const { data: profiles } = useProfiles({
     where: {

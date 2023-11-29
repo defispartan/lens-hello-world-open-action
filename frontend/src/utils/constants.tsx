@@ -20,10 +20,10 @@ interface UiConfig {
 export const uiConfig: UiConfig =
   network === "polygon"
     ? {
-        helloWorldContractAddress: "0x",
-        helloWorldContractStartBlock: 0,
-        openActionContractAddress: "0x",
-        openActionContractStartBlock: 0,
+        helloWorldContractAddress: "0xCAE0AD610762F917E249E26a64ac06bcDE926d9c",
+        helloWorldContractStartBlock: 50547287,
+        openActionContractAddress: "0x7c4fAeef5ba47a437DFBaB57C016c1E706F56fcf",
+        openActionContractStartBlock: 50547287,
         lensHubProxyAddress: "0xDb46d1Dc155634FbC732f92E853b10B288AD5a1d",
         blockExplorerLink: "https://polygonscan.com/tx/",
         rpc: `https://polygon-mainnet.g.alchemy.com/v2/${

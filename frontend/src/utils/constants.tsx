@@ -3,7 +3,9 @@ export const network: string = "mumbai"; // options: 'polygon', 'mumbai'
 // mode flag sets whether to fetch smart post instances from Lens API or querying directly from contract events
 // Mumbai open actions are always indexed on the Lens API, Polygon actions need to be allowlisted on the API (though they are permisionless on-chain)
 // To request allowlist for Polygon actions, you can submit a PR to https://github.com/lens-protocol/open-actions-directory
-export const mode: string = "api"; // options: 'api', 'events'
+export const mode: string = "events"; // options: 'api', 'events'
+export const ipfsGateway = "https://ipfs.io/ipfs/";
+export const arweaveGateway = "https://arweave.net/";
 
 interface UiConfig {
   helloWorldContractAddress: `0x${string}`;
@@ -29,10 +31,10 @@ export const uiConfig: UiConfig =
         }`,
       }
     : {
-        helloWorldContractAddress: "0x89D7Fe2f4411487a0691CF8E9461f21Dd29Ba496",
-        helloWorldContractStartBlock: 42890416,
-        openActionContractAddress: "0x7AAc74F75ac038478922E1dE753260fA20cf3CB8",
-        openActionContractStartBlock: 42890416,
+        helloWorldContractAddress: "0x4ae4400c4f965F818f3E0b66e9b0ef5721146Bc0",
+        helloWorldContractStartBlock: 42984295,
+        openActionContractAddress: "0x038D178a5aF79fc5BdbB436daA6B9144c669A93F",
+        openActionContractStartBlock: 42984295,
         lensHubProxyAddress: "0x4fbffF20302F3326B20052ab9C217C44F6480900",
         blockExplorerLink: "https://mumbai.polygonscan.com/tx/",
         rpc: `https://polygon-mumbai.g.alchemy.com/v2/${

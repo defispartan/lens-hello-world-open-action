@@ -38,10 +38,12 @@ export const Events = () => {
       ) : (
         filteredEvents.map((event, index) => (
           <div key={index} className="border p-3 rounded-xl mt-3 w-[500px]">
-            <p className="font-geist-medium">{event.args.message}</p>
+            <p className="font-geist-medium inline-content">
+              {event.args.message}
+            </p>
             <div className="inline-content">from</div>
             <div className="inline-content">{event.args.actor}</div>
-            <div className="header-text">
+            <div className="header-text inline-content">
               <a href={`${uiConfig.blockExplorerLink}${event.transactionHash}`}>
                 Link
               </a>

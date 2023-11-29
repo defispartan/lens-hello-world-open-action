@@ -1,15 +1,16 @@
-import { useState } from "react";
-import { publicClient } from "../main";
-import { mode, uiConfig } from "../utils/constants";
-import { lensHubAbi } from "../utils/lensHubAbi";
-import { useWalletClient } from "wagmi";
-import { PostCreatedEventFormatted } from "../utils/types";
-import { fetchInitMessage } from "../utils/fetchInitMessage";
-import { useLensHelloWorld } from "../context/LensHelloWorldContext";
-import { encodeAbiParameters, encodeFunctionData } from "viem";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { usePublications } from "@lens-protocol/react-web";
+import { useState } from "react";
+import { encodeAbiParameters, encodeFunctionData } from "viem";
+import { useWalletClient } from "wagmi";
+import { useLensHelloWorld } from "../context/LensHelloWorldContext";
+import { publicClient } from "../main";
+import { mode, uiConfig } from "../utils/constants";
+import { fetchInitMessage } from "../utils/fetchInitMessage";
+import { lensHubAbi } from "../utils/lensHubAbi";
+import { serializeLink } from "../utils/serializeLink";
+import { PostCreatedEventFormatted } from "../utils/types";
 
 const ActionBox = ({
   post,
@@ -83,7 +84,7 @@ const ActionBox = ({
         <p>Initialize Message: {fetchInitMessage(post)}</p>
         <img
           className="my-3 rounded-2xl"
-          src={post.args.postParams.contentURI}
+          src={serializeLink(post.args.postParams.contentURI)}
           alt="Post"
         />
         <Button asChild variant="link">
@@ -112,7 +113,9 @@ const ActionBox = ({
           Post Message
         </Button>
       )}
-      {createState && <p className="mt-2 text-primary">{createState}</p>}
+      {createState && (
+        <p className="mt-2 text-primary create-state-text">{createState}</p>
+      )}
       {txHash && (
         <a
           href={`${uiConfig.blockExplorerLink}${txHash}`}

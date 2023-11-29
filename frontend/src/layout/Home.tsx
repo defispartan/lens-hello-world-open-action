@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { useWeb3Modal } from "@web3modal/wagmi/react";
 import { PenLine, Rows, Activity, LogIn, Unplug } from "lucide-react";
 import { network } from "@/utils/constants";
+import { disconnect } from "wagmi/actions";
 
 export const Home = () => {
   const [activeSection, setActiveSection] = useState<string>("create");
@@ -101,12 +102,17 @@ function Profiles({
           Events
         </Button>
       </div>
-      {!address && (
-        <Button variant="outline" className="my-4" onClick={() => open()}>
-          <Unplug className="mr-2 h-4 w-4" />
-          Connect Wallet to Create Post
-        </Button>
-      )}
+      <Button
+        variant="outline"
+        className="my-4"
+        onClick={() => {
+          if (address) disconnect();
+          else open();
+        }}
+      >
+        <Unplug className="mr-2 h-4 w-4" />
+        {address ? "Disconnect" : "Connect Wallet"}
+      </Button>
       {showNoLensProfiles && <p>No Lens Profiles found for this address</p>}
       {showNoLensProfiles && network === "mumbai" && (
         <p>

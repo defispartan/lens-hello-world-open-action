@@ -90,7 +90,8 @@ label {
 .create-state-text {
   color: black;
   margin-top: 30px;
-  display: flex;
+  display: inline;
+  width: 600px;
   justify-content: center;
 }
 

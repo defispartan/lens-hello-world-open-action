@@ -132,6 +132,8 @@ label {
 .inline-content {
   margin-bottom: 10px;
   font-size: 14px;
+  display: flex;
+  justify-content: center;
 }
 
 .button-row {

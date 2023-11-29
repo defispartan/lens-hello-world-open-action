@@ -99,8 +99,7 @@ export const LensHelloWorldProvider: FC<LensHelloWorldProviderProps> = ({
         helloWorldEvents as unknown as GreetEvent[];
 
       const filteredEvents = postEventsParsed.filter((event) => {
-        // const address = event.args.to;
-        event.args.postParams.actionModules.includes(
+        return event.args.postParams.actionModules.includes(
           uiConfig.openActionContractAddress
         );
       });

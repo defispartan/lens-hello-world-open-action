@@ -11,7 +11,7 @@ import { fetchInitMessage } from "../utils/fetchInitMessage";
 import { lensHubAbi } from "../utils/lensHubAbi";
 import { serializeLink } from "../utils/serializeLink";
 import { PostCreatedEventFormatted } from "../utils/types";
-import { ProfileId } from "@lens-protocol/metadata";
+//import { ProfileId } from "@lens-protocol/metadata";
 
 const ActionBox = ({
   post,

@@ -2,17 +2,19 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./layout/App.tsx";
 import { configureChains } from "wagmi";
-import { polygonMumbai } from "wagmi/chains";
+import { polygon, polygonMumbai } from "wagmi/chains";
 import { jsonRpcProvider } from "wagmi/providers/jsonRpc";
-import { rpc } from "./utils/constants.tsx";
-import './index.css'
+import { uiConfig, network } from "./utils/constants.tsx";
+import "./index.css";
+
+const networkSlug = network === "polygon" ? polygon : polygonMumbai;
 
 export const { publicClient } = configureChains(
-  [polygonMumbai],
+  [networkSlug],
   [
     jsonRpcProvider({
       rpc: () => ({
-        http: rpc,
+        http: uiConfig.rpc,
       }),
     }),
   ]

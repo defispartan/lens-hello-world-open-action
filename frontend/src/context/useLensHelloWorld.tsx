@@ -1,6 +1,6 @@
 import { ReactNode, FC, useState, useEffect, useCallback } from "react";
 import { useAccount } from "wagmi";
-import LensHelloWorldContext from "./LensHellowWorldContext";
+import LensHelloWorldContext from "./LensHelloWorldContext";
 import {
   GreetEvent,
   GreetEventFormatted,
@@ -10,12 +10,7 @@ import {
   convertGreetEventToSerializable,
   LoginData,
 } from "../utils/types";
-import {
-  helloWorldContractAddress,
-  lensHubProxyAddress,
-  openActionContractAddress,
-  openActionsContractStartBlock,
-} from "../utils/constants";
+import { network, uiConfig } from "../utils/constants";
 import { publicClient } from "../main";
 import { lensHubEventsAbi } from "../utils/lensHubEventsAbi";
 import { helloWorldAbi } from "../utils/helloWorldAbi";
@@ -37,12 +32,14 @@ export const LensHelloWorldProvider: FC<LensHelloWorldProviderProps> = ({
   const [loginData, setLoginData] = useState<LoginData>();
 
   const connect = (loginDataParam: LoginData) => {
-    console.log('loginDataParam: ', loginDataParam)
     setLoginData(loginDataParam);
   };
 
+  const chainId = network === "polygon" ? 137 : 80001;
+
   const refresh = useCallback(async () => {
     setLoading(true);
+
     const savedCurrentBlock = localStorage.getItem("currentBlock");
     const savedPostEvents: PostCreatedEventFormatted[] = JSON.parse(
       localStorage.getItem("postEvents") || "[]"
@@ -61,9 +58,11 @@ export const LensHelloWorldProvider: FC<LensHelloWorldProviderProps> = ({
 
     const startBlock = savedCurrentBlock
       ? parseInt(savedCurrentBlock)
-      : openActionsContractStartBlock;
+      : uiConfig.openActionContractStartBlock;
 
-    const currentBlock = await publicClient({ chainId: 80001 }).getBlockNumber();
+    const currentBlock = await publicClient({
+      chainId,
+    }).getBlockNumber();
 
     const postEventsMap = new Map(
       savedPostEvents.map((event) => [event.transactionHash, event])
@@ -72,11 +71,13 @@ export const LensHelloWorldProvider: FC<LensHelloWorldProviderProps> = ({
       savedHelloWorldEvents.map((event) => [event.transactionHash, event])
     );
 
-    for (let i = startBlock; i < currentBlock; i += 1000) {
-      const toBlock = i + 999 > currentBlock ? currentBlock : i + 999;
+    for (let i = startBlock; i < currentBlock; i += 2000) {
+      const toBlock = i + 1999 > currentBlock ? currentBlock : i + 1999;
 
-      const postEvents = await publicClient({ chainId: 1 }).getContractEvents({
-        address: lensHubProxyAddress,
+      const postEvents = await publicClient({
+        chainId: network === "polygon" ? 137 : 80001,
+      }).getContractEvents({
+        address: uiConfig.lensHubProxyAddress,
         abi: lensHubEventsAbi,
         eventName: "PostCreated",
         fromBlock: BigInt(i),
@@ -84,9 +85,9 @@ export const LensHelloWorldProvider: FC<LensHelloWorldProviderProps> = ({
       });
 
       const helloWorldEvents = await publicClient({
-        chainId: 80001,
+        chainId,
       }).getContractEvents({
-        address: helloWorldContractAddress,
+        address: uiConfig.helloWorldContractAddress,
         abi: helloWorldAbi,
         eventName: "Greet",
         fromBlock: BigInt(i),
@@ -97,9 +98,11 @@ export const LensHelloWorldProvider: FC<LensHelloWorldProviderProps> = ({
       const helloWorldEventsParsed =
         helloWorldEvents as unknown as GreetEvent[];
 
-      const filteredEvents = postEventsParsed.filter((event) =>
-        event.args.postParams.actionModules.includes(openActionContractAddress)
-      );
+      const filteredEvents = postEventsParsed.filter((event) => {
+        return event.args.postParams.actionModules.includes(
+          uiConfig.openActionContractAddress
+        );
+      });
 
       const serializablePostEvents = filteredEvents.map((event) =>
         convertPostEventToSerializable(event)

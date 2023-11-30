@@ -1,4 +1,4 @@
-export const network: string = "mumbai"; // options: 'polygon', 'mumbai'
+export const network: string = "polygon"; // options: 'polygon', 'mumbai'
 
 // mode flag sets whether to fetch smart post instances from Lens API or querying directly from contract events
 // Mumbai open actions are always indexed on the Lens API, Polygon actions need to be allowlisted on the API (though they are permisionless on-chain)

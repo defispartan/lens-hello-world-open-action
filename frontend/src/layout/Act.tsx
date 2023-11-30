@@ -11,6 +11,7 @@ import { fetchInitMessage } from "../utils/fetchInitMessage";
 import { lensHubAbi } from "../utils/lensHubAbi";
 import { serializeLink } from "../utils/serializeLink";
 import { PostCreatedEventFormatted } from "../utils/types";
+import { ProfileId } from "@lens-protocol/metadata";
 
 const ActionBox = ({
   post,
@@ -198,15 +199,16 @@ const ActionBox = ({
 export const Actions = () => {
   const [filterOwnPosts, setFilterOwnPosts] = useState(false);
   const { address, profileId, posts, refresh, loading } = useLensHelloWorld();
+  //const profileIdString = profileId ? "0x" + profileId.toString(16) : "0x0";
   const { data } = usePublications({
     where: {
+      //from: [profileIdString as ProfileId],
       withOpenActions: [{ address: uiConfig.helloWorldContractAddress }],
     },
   });
   console.log(data);
   const activePosts = mode === "api" ? [] : posts;
-  console.log("ACTIVE POSTS");
-  console.log(activePosts);
+
   let filteredPosts = filterOwnPosts
     ? activePosts.filter(
         (post) => post.args.postParams.profileId === profileId?.toString()

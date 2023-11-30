@@ -2,7 +2,7 @@
 
 This repo contains smart contracts and a UI which demonstrates a Lens Smart Post to call a helloWorld() function on an external contract.
 
-To get started, you can create a profile on the Mumbai deployment of Lens V2 [here](https://web-git-lens-v2-testnet-heyxyz.vercel.app/).
+The Polygon mainnet version of the site is live [here](https://lens-hello-world-open-action.vercel.app/)
 
 
 - [Integration Guide](#integration-guide)
@@ -17,9 +17,9 @@ To get started, you can create a profile on the Mumbai deployment of Lens V2 [he
 
 The deployed action module addresses are: 
 
-- [Polygon Mainnet (coming soon)](https://polygonscan.com/address/0x65a37d58Ed258cf5BDEa05ed67d9A8922A179b3E)
+- [Polygon Mainnet](https://polygonscan.com/address/0x7c4fAeef5ba47a437DFBaB57C016c1E706F56fcf)
 
-- [Mumbai Testnet](https://mumbai.polygonscan.com/address/0x7AAc74F75ac038478922E1dE753260fA20cf3CB8) 
+- [Mumbai Testnet](https://mumbai.polygonscan.com/address/0x038D178a5aF79fc5BdbB436daA6B9144c669A93F) 
 
 
 To integrate this open action, support must be added to create and execute the action.
@@ -100,13 +100,15 @@ For a complete example of executing this open action on a publication with viem,
 
 ### Polygon Mainnet
 
-Coming soon
+[HelloWorld.sol](https://polygonscan.com/address/0xCAE0AD610762F917E249E26a64ac06bcDE926d9c) 
+
+[HelloWorldOpenAction.sol](https://polygonscan.com/address/0x7c4fAeef5ba47a437DFBaB57C016c1E706F56fcf) 
 
 ### Mumbai Testnet
 
-[HelloWorld.sol](https://mumbai.polygonscan.com/address/0x89D7Fe2f4411487a0691CF8E9461f21Dd29Ba496) 
+[HelloWorld.sol](https://mumbai.polygonscan.com/address/0x4ae4400c4f965F818f3E0b66e9b0ef5721146Bc0) 
 
-[HelloWorldOpenAction.sol](https://mumbai.polygonscan.com/address/0x7AAc74F75ac038478922E1dE753260fA20cf3CB8) 
+[HelloWorldOpenAction.sol](https://mumbai.polygonscan.com/address/0x038D178a5aF79fc5BdbB436daA6B9144c669A93F) 
 
 ### To Deploy Your Own
 
@@ -117,7 +119,7 @@ Coming soon
 
 ## Frontend
 
-Mumbai deployment is live @ https://hello-world-open-action.vercel.app/
+Polygon deployment is live @ https://lens-hello-world-open-action.vercel.app/
 
 To run locally, clone repo, switch to frontend directory, make sure you have [bun installed](https://bun.sh/docs/installation) and run `bun install && bun run dev` 
 
@@ -125,4 +127,4 @@ Contract address are configured in `frontend/src/constants.ts`
 
 The `frontend/src/layout` components `Create`, `Act`, and `Events` contain code to create a post with this action, execute this action on a post, and display HelloWorld.sol events respectively. 
 
-Setup VITE_ALCHEMY_RPC_URL environment variable: copy `.env.example` to `.env` in frontend directory, input VITE_ALCHEMY_RPC_URL
+Copy `.env.example` to `.env` in frontend directory, input environment variables, and run `source .env` (or equivalent on your OS).

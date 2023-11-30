@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useLensHelloWorld } from "../context/LensHelloWorldContext";
-import { encodeAbiParameters, encodeFunctionData } from "viem";
+import { encodeAbiParameters, encodeFunctionData, zeroAddress } from "viem";
 import { uiConfig } from "../utils/constants";
 import { lensHubAbi } from "../utils/lensHubAbi";
 import { useWalletClient } from "wagmi";
@@ -12,6 +12,7 @@ export const Create = () => {
   const { address, profileId, refresh } = useLensHelloWorld();
   const { data: walletClient } = useWalletClient();
   const [createState, setCreateState] = useState<string | undefined>();
+  const [freeCollect, setFreeCollect] = useState<boolean>(false);
   const [txHash, setTxHash] = useState<string | undefined>();
   const [uri, setURI] = useState<string>("");
   const [initializeText, setInitializeText] = useState<string>("");
@@ -22,12 +23,41 @@ export const Create = () => {
       [initializeText]
     );
 
+    const actionModulesInitDatas = [encodedInitData];
+    const actionModules = [uiConfig.openActionContractAddress];
+    if (freeCollect) {
+      const baseFeeCollectModuleTypes = [
+        { type: "uint160" },
+        { type: "uint96" },
+        { type: "address" },
+        { type: "uint16" },
+        { type: "bool" },
+        { type: "uint72" },
+        { type: "address" },
+      ];
+
+      const encodedBaseFeeCollectModuleInitData = encodeAbiParameters(
+        baseFeeCollectModuleTypes,
+        [0, 0, zeroAddress, 0, false, 0, zeroAddress]
+      );
+
+      const encodedCollectActionInitData = encodeAbiParameters(
+        [{ type: "address" }, { type: "bytes" }],
+        [
+          uiConfig.simpleCollectModuleContractAddress,
+          encodedBaseFeeCollectModuleInitData,
+        ]
+      );
+      actionModulesInitDatas.push(encodedCollectActionInitData);
+      actionModules.push(uiConfig.collectActionContractAddress);
+    }
+
     // Post parameters
     const args = {
       profileId: BigInt(profileId!),
       contentURI: uri,
-      actionModules: [uiConfig.openActionContractAddress],
-      actionModulesInitDatas: [encodedInitData],
+      actionModules,
+      actionModulesInitDatas,
       referenceModule:
         "0x0000000000000000000000000000000000000000" as `0x${string}`,
       referenceModuleInitData: "0x01" as `0x${string}`,
@@ -84,6 +114,16 @@ export const Create = () => {
                 value={initializeText}
                 onChange={(e) => setInitializeText(e.target.value)}
               />
+              <div className="my-3 mx-auto">
+                <input
+                  type="checkbox"
+                  id="filterCheckbox"
+                  className="mr-3 cursor-pointer"
+                  checked={freeCollect}
+                  onChange={(e) => setFreeCollect(e.target.checked)}
+                />
+                <label htmlFor="filterCheckbox">Enable free collects</label>
+              </div>
               <Button className="mt-3" onClick={createPost}>
                 Create
               </Button>

@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { usePublications } from "@lens-protocol/react-web";
 import { useState } from "react";
-import { encodeAbiParameters, encodeFunctionData } from "viem";
+import { encodeAbiParameters, encodeFunctionData, zeroAddress } from "viem";
 import { useWalletClient } from "wagmi";
 import { useLensHelloWorld } from "../context/LensHelloWorldContext";
 import { publicClient } from "../main";
@@ -28,7 +28,7 @@ const ActionBox = ({
   const [txHash, setTxHash] = useState<string | undefined>();
   const { data: walletClient } = useWalletClient();
 
-  const execute = async (
+  const executeHelloWorld = async (
     post: PostCreatedEventFormatted,
     actionText: string
   ) => {
@@ -45,6 +45,61 @@ const ActionBox = ({
       referrerPubIds: [],
       actionModuleAddress: uiConfig.openActionContractAddress,
       actionModuleData: encodedActionData as `0x${string}`,
+    };
+
+    const calldata = encodeFunctionData({
+      abi: lensHubAbi,
+      functionName: "act",
+      args: [args],
+    });
+
+    setCreateState("PENDING IN WALLET");
+    try {
+      const hash = await walletClient!.sendTransaction({
+        to: uiConfig.lensHubProxyAddress,
+        account: address,
+        data: calldata as `0x${string}`,
+      });
+      setCreateState("PENDING IN MEMPOOL");
+      setTxHash(hash);
+      const result = await publicClient({
+        chainId: 80001,
+      }).waitForTransactionReceipt({ hash });
+      if (result.status === "success") {
+        setCreateState("SUCCESS");
+        refresh();
+      } else {
+        setCreateState("CREATE TXN REVERTED");
+      }
+    } catch (e) {
+      setCreateState(`ERROR: ${e instanceof Error ? e.message : String(e)}`);
+    }
+  };
+
+  const executeCollect = async (post: PostCreatedEventFormatted) => {
+    const baseFeeCollectModuleTypes = [
+      { type: "address" },
+      { type: "uint256" },
+    ];
+
+    const encodedBaseFeeCollectModuleInitData = encodeAbiParameters(
+      baseFeeCollectModuleTypes,
+      [zeroAddress, 0]
+    );
+
+    const encodedCollectActionData = encodeAbiParameters(
+      [{ type: "address" }, { type: "bytes" }],
+      [address!, encodedBaseFeeCollectModuleInitData]
+    );
+
+    const args = {
+      publicationActedProfileId: BigInt(post.args.postParams.profileId || 0),
+      publicationActedId: BigInt(post.args.pubId),
+      actorProfileId: BigInt(profileId || 0),
+      referrerProfileIds: [],
+      referrerPubIds: [],
+      actionModuleAddress: uiConfig.collectActionContractAddress,
+      actionModuleData: encodedCollectActionData as `0x${string}`,
     };
 
     const calldata = encodeFunctionData({
@@ -109,10 +164,21 @@ const ActionBox = ({
         />
       </div>
       {profileId && (
-        <Button className="mt-3" onClick={() => execute(post, actionText)}>
+        <Button
+          className="mt-3"
+          onClick={() => executeHelloWorld(post, actionText)}
+        >
           Post Message
         </Button>
       )}
+      {profileId &&
+        post.args.postParams.actionModules.includes(
+          uiConfig.collectActionContractAddress
+        ) && (
+          <Button className="mt-3" onClick={() => executeCollect(post)}>
+            Collect Post
+          </Button>
+        )}
       {createState && (
         <p className="mt-2 text-primary create-state-text">{createState}</p>
       )}

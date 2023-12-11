@@ -6,6 +6,7 @@ import { polygon, polygonMumbai } from "wagmi/chains";
 import { jsonRpcProvider } from "wagmi/providers/jsonRpc";
 import { uiConfig, network } from "./utils/constants.tsx";
 import "./index.css";
+import { publicProvider } from "wagmi/providers/public";
 
 const networkSlug = network === "polygon" ? polygon : polygonMumbai;
 
@@ -17,6 +18,7 @@ export const { publicClient } = configureChains(
         http: uiConfig.rpc,
       }),
     }),
+    publicProvider(),
   ]
 );
 

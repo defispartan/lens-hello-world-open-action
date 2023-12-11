@@ -63,7 +63,7 @@ function Profiles({
 }) {
   const { data: profiles } = useProfiles({
     where: {
-      ownedBy: [address || ""],
+      ownedBy: [address || "0x0000000000000000000000000000000000000000"],
     },
   });
 

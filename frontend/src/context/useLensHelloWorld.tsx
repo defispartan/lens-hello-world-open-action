@@ -35,9 +35,9 @@ export const LensHelloWorldProvider: FC<LensHelloWorldProviderProps> = ({
     setLoginData(loginDataParam);
   };
 
-  const chainId = network === "polygon" ? 137 : 80001;
-
   const refresh = useCallback(async () => {
+    const chainId = network === "polygon" ? 137 : 80001;
+
     setLoading(true);
 
     const savedCurrentBlock = localStorage.getItem("currentBlock");
@@ -190,8 +190,7 @@ export const LensHelloWorldProvider: FC<LensHelloWorldProviderProps> = ({
         },
         loading,
         connect,
-      }}
-    >
+      }}>
       {children}
     </LensHelloWorldContext.Provider>
   );

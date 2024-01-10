@@ -181,14 +181,14 @@ The local frontend works because the contracts have already been deployed on Pol
 1. **In `frontend/src/utils/constants.tsx` file, update these different variables:**
 
    - `network`: the network where your contracts are deployed (Mumbai or Polygon)
-   - `helloWorldContractAddress` : the address of the `HelloWorld.sol` contract (ie: the contract your Open Action will execute)
-   - `openActionContractAddress` : the address of the `HelloWorldOpenAction.sol` contract (ie: the Open Action contract)
-   - `openActionContractStartBlock` & `helloWorldContractStartBlock`: if you have an Alchemy free plan, we suggest you to put a recent block number (> the last 100) otherwise your frontend will be certainly rate limited.
+   - `helloWorldContractAddress` : the address of the `HelloWorld.sol` contract (ie: the contract your Open Action will execute).
+   - `openActionContractAddress` : the address of the `HelloWorldOpenAction.sol` contract (ie: the Open Action contract).
+   - `openActionContractStartBlock` & `helloWorldContractStartBlock`: you can set the block number from which contracts have been deployed.
 
 2. **Clean localStorage**
 
-   If you already tried the frontend previously with other contracts on other networks, please make sure to clean all the localStorage before running the frontend (post and event are stored on local storage to avoid refetching again them at each refresh).
+   If you already tried the frontend previously with other contracts or other networks, please make sure to clean all the localStorage before running the frontend again (posts and events are stored on localStorage to avoid refetching them again at each refresh).
 
 3. **Get a Lens Profile**
 
-   If you have chosen to deploy your contract on Mumbai testnet, make sure to have a Lens Testnet Profile. You can get one [here](https://testnet.hey.xyz/) (click on "Login" then on "Create a testnet account").
+   If you chose to deploy your contract on Mumbai testnet, make sure to have a Lens Testnet Profile. You can get one [here](https://testnet.hey.xyz/) (click on "Login" then on "Create a testnet account").

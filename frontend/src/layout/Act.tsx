@@ -146,8 +146,7 @@ const ActionBox = ({
         <Button asChild variant="link">
           <a
             href={`${uiConfig.blockExplorerLink}${post.transactionHash}`}
-            target="_blank"
-          >
+            target="_blank">
             Txn Link
           </a>
         </Button>
@@ -167,8 +166,7 @@ const ActionBox = ({
       {profileId && (
         <Button
           className="mt-3"
-          onClick={() => executeHelloWorld(post, actionText)}
-        >
+          onClick={() => executeHelloWorld(post, actionText)}>
           Post Message
         </Button>
       )}
@@ -187,8 +185,7 @@ const ActionBox = ({
         <a
           href={`${uiConfig.blockExplorerLink}${txHash}`}
           target="_blank"
-          className="block-explorer-link"
-        >
+          className="block-explorer-link">
           Block Explorer Link
         </a>
       )}
@@ -237,9 +234,13 @@ export const Actions = () => {
           </label>
         </div>
       )}
-      {loading && <div className="spinner" />}
-      {filteredPosts.length === 0 ? (
-        <p>None</p>
+      {loading && (
+        <span className="flex items-center gap-x-2">
+          Retrieving Posts... <div className="spinner" />
+        </span>
+      )}
+      {!loading && filteredPosts.length === 0 ? (
+        <p>No Posts found</p>
       ) : (
         filteredPosts.map((post, index) => (
           <ActionBox

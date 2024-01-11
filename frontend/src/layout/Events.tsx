@@ -32,9 +32,13 @@ export const Events = () => {
           </label>
         </div>
       )}
-      {loading && <div className="spinner" />}
-      {filteredEvents.length === 0 ? (
-        <p>None</p>
+      {loading && (
+        <span className="flex items-center gap-x-2">
+          Retrieving Events... <div className="spinner" />
+        </span>
+      )}
+      {!loading && filteredEvents.length === 0 ? (
+        <p>No events founds</p>
       ) : (
         filteredEvents.map((event, index) => (
           <div key={index} className="border p-3 rounded-xl mt-3 w-[500px]">
